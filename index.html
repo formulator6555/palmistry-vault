@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>कर्मरेखा — Karmarekha by Raj</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   KARMAREKHA — DARK PURPLE + GOLD
+   Phase 1: Soul of the Portal
+   ============================================ */
+:root {
+  --bg-deep: #0d0618;
+  --bg-card: #1a0a2e;
+  --bg-input: #240d3d;
+  --border: #3d1f5e;
+  --border-light: #4a2670;
+  --accent: #c9a227;
+  --accent-light: #e8d48b;
+  --accent-glow: rgba(201,162,39,0.3);
+  --accent-glow2: rgba(201,162,39,0.15);
+  --text-primary: #f0ede8;
+  --text-secondary: #9d8fad;
+  --text-muted: #5a4d6b;
+  --success: #27c96a;
+  --danger: #c92727;
+  --fire: #ff6b35;
+  --water: #4a90d9;
+  --earth: #6b8f47;
+  --air: #9b59b6;
+  --pink: #e74c8b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Raleway', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+h1,h2,h3,h4,.brand-text,.nav-logo,.login-card h1 {
+  font-family: 'Cinzel', serif;
+}
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg-deep); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--border-light); }
+
+/* ---- PARTICLES ---- */
+.particles {
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none; z-index:0; overflow:hidden;
+}
+.particle {
+  position:absolute; border-radius:50%;
+  opacity:0; animation:floatUp linear infinite;
+}
+.particle.gold {
+  background:var(--accent);
+  box-shadow:0 0 6px var(--accent-glow);
+}
+.particle.purple {
+  background:var(--border-light);
+  box-shadow:0 0 6px rgba(74,38,112,0.4);
+}
+@keyframes floatUp {
+  0% { opacity:0; transform:translateY(100vh) scale(0) rotate(0deg); }
+  10% { opacity:0.7; }
+  50% { opacity:0.3; }
+  100% { opacity:0; transform:translateY(-10vh) scale(1) rotate(180deg); }
+}
+
+/* ---- LOADING ---- */
+.loading-overlay {
+  position:fixed; inset:0;
+  background:var(--bg-deep);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  z-index:9998; gap:20px;
+}
+.loading-seal {
+  width:80px; height:80px;
+  border:2px solid var(--border);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  display:flex; align-items:center; justify-content:center;
+}
+.loading-seal::after {
+  content:'र'; font-size:28px;
+  color:var(--accent);
+  font-family:'Cinzel',serif;
+  animation:spinReverse 1s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+@keyframes spinReverse { to { transform:rotate(-360deg); } }
+.loading-text {
+  color:var(--text-secondary);
+  font-family:'Cinzel',serif;
+  font-size:14px; letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+/* ---- PAGE SYSTEM ---- */
+.page { display:none; position:relative; z-index:1; }
+.page.active { display:block; }
+
+/* ---- TOAST ---- */
+.toast {
+  position:fixed; top:20px; right:20px;
+  padding:14px 28px; border-radius:10px;
+  font-size:14px; font-weight:600; z-index:9999;
+  transform:translateX(calc(100% + 40px));
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  box-shadow:0 10px 40px rgba(0,0,0,0.4);
+  font-family:'Raleway',sans-serif;
+}
+.toast.show { transform:translateX(0); }
+.toast.success { background:var(--success); color:#fff; }
+.toast.error { background:var(--danger); color:#fff; }
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+.login-container {
+  min-height:100vh; display:flex;
+  align-items:center; justify-content:center;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(201,162,39,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(74,38,112,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(13,6,24,1) 0%, var(--bg-deep) 100%);
+}
+
+.login-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:52px 44px;
+  width:100%; max-width:440px;
+  text-align:center;
+  box-shadow:0 20px 80px rgba(0,0,0,0.6), 0 0 40px var(--accent-glow2);
+  position:relative; overflow:hidden;
+}
+.login-card::before {
+  content:''; position:absolute;
+  top:0; left:-50%; right:-50%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.login-card::after {
+  content:''; position:absolute;
+  bottom:0; left:-50%; right:-50%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--border-light), transparent);
+}
+
+/* SEAL LOGO */
+.seal-logo {
+  width:90px; height:90px; margin:0 auto 16px;
+  position:relative;
+  display:flex; align-items:center; justify-content:center;
+}
+.seal-outer {
+  position:absolute; inset:0;
+  border:2px solid var(--accent);
+  border-radius:50%;
+  animation:slowSpin 20s linear infinite;
+}
+.seal-outer::before {
+  content:''; position:absolute; inset:4px;
+  border:1px solid var(--border-light);
+  border-radius:50%;
+}
+.seal-lines {
+  position:absolute; inset:0;
+}
+.seal-lines::before, .seal-lines::after {
+  content:''; position:absolute;
+  background:var(--accent);
+  opacity:0.3;
+}
+.seal-lines::before {
+  width:1px; height:100%;
+  left:50%; top:0;
+}
+.seal-lines::after {
+  width:100%; height:1px;
+  top:50%; left:0;
+}
+@keyframes slowSpin { to { transform:rotate(360deg); } }
+.seal-ra {
+  font-size:36px; color:var(--accent);
+  font-family:'Cinzel',serif;
+  font-weight:700; z-index:1;
+  text-shadow:0 0 20px var(--accent-glow);
+}
+
+.brand-title {
+  font-family:'Cinzel',serif;
+  font-size:26px; font-weight:700;
+  letter-spacing:4px;
+  background:linear-gradient(135deg, var(--accent), var(--accent-light), var(--accent));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:2px;
+}
+.brand-subtitle {
+  font-family:'Cinzel',serif;
+  font-size:12px; color:var(--text-muted);
+  letter-spacing:6px; text-transform:uppercase;
+  margin-bottom:28px;
+}
+.login-tagline {
+  color:var(--text-secondary);
+  font-size:13px; margin-bottom:28px;
+  font-style:italic; letter-spacing:0.5px;
+}
+
+.form-group { text-align:left; margin-bottom:20px; }
+.form-group label {
+  display:block; font-size:11px;
+  color:var(--text-secondary);
+  margin-bottom:6px; text-transform:uppercase;
+  letter-spacing:1.5px; font-weight:600;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width:100%; padding:14px 16px;
+  background:var(--bg-input);
+  border:1px solid var(--border);
+  border-radius:10px; color:var(--text-primary);
+  font-size:15px; transition:all 0.3s;
+  font-family:'Raleway',sans-serif;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline:none; border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-glow);
+}
+.form-group textarea { resize:vertical; min-height:80px; }
+
+.btn-primary {
+  width:100%; padding:15px 24px;
+  background:linear-gradient(135deg, var(--accent), #b8911f);
+  color:var(--bg-deep); border:none;
+  border-radius:10px; font-size:15px;
+  font-weight:700; cursor:pointer;
+  transition:all 0.3s;
+  font-family:'Cinzel',serif;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  position:relative; overflow:hidden;
+}
+.btn-primary::after {
+  content:''; position:absolute;
+  top:0; left:-100%; width:100%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition:left 0.6s;
+}
+.btn-primary:hover::after { left:100%; }
+.btn-primary:hover {
+  transform:translateY(-2px);
+  box-shadow:0 6px 30px var(--accent-glow);
+}
+.btn-primary:active { transform:translateY(0); }
+.btn-primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+.btn-secondary {
+  padding:10px 22px; background:transparent;
+  border:1px solid var(--border);
+  border-radius:8px; color:var(--text-secondary);
+  cursor:pointer; font-size:13px;
+  transition:all 0.2s; font-family:'Cinzel',serif;
+  letter-spacing:1px;
+}
+.btn-secondary:hover { border-color:var(--accent); color:var(--accent); }
+
+.btn-danger {
+  padding:10px 20px; background:transparent;
+  border:1px solid var(--danger); border-radius:8px;
+  color:var(--danger); cursor:pointer;
+  font-size:13px; transition:all 0.2s;
+  font-family:'Raleway',sans-serif;
+}
+.btn-danger:hover { background:rgba(201,39,39,0.1); }
+
+.error-msg {
+  margin-top:16px; padding:12px 16px;
+  background:rgba(201,39,39,0.12);
+  border:1px solid rgba(201,39,39,0.3);
+  border-radius:10px; color:#ff6b6b;
+  font-size:13px; animation:shake 0.4s ease;
+}
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-8px)}
+  75%{transform:translateX(8px)}
+}
+
+.admin-link {
+  margin-top:32px; padding-top:24px;
+  border-top:1px solid var(--border);
+}
+.admin-link p {
+  color:var(--text-muted); font-size:11px;
+  margin-bottom:10px; letter-spacing:2px;
+  text-transform:uppercase;
+  font-family:'Cinzel',serif;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.dashboard-nav {
+  display:flex; align-items:center;
+  justify-content:space-between;
+  padding:14px 28px;
+  background:rgba(26,10,46,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  position:sticky; top:0; z-index:100;
+}
+.nav-brand {
+  display:flex; align-items:center; gap:12px;
+}
+.nav-seal {
+  width:32px; height:32px;
+  border:1.5px solid var(--accent);
+  border-radius:50%;
+  display:flex; align-items:center;
+  justify-content:center;
+  font-family:'Cinzel',serif;
+  color:var(--accent); font-size:14px;
+  font-weight:700;
+}
+.nav-logo {
+  font-size:16px; font-weight:700;
+  letter-spacing:3px;
+  background:linear-gradient(135deg, var(--accent), var(--accent-light));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.nav-right { display:flex; align-items:center; gap:12px; }
+.nav-user {
+  color:var(--text-secondary); font-size:13px;
+  font-family:'Cinzel',serif; letter-spacing:1px;
+}
+.btn-logout {
+  padding:8px 16px; background:transparent;
+  border:1px solid var(--border); border-radius:8px;
+  color:var(--text-secondary); cursor:pointer;
+  font-size:12px; transition:all 0.2s;
+  font-family:'Raleway',sans-serif;
+}
+.btn-logout:hover { border-color:var(--danger); color:var(--danger); }
+
+/* ============================================
+   DASHBOARD
+   ============================================ */
+.dashboard-container {
+  max-width:860px; margin:0 auto;
+  padding:28px 16px 100px;
+}
+
+.card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:16px; padding:32px;
+  margin-bottom:24px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  animation:fadeInUp 0.6s ease both;
+}
+.card:nth-child(2){animation-delay:0.05s}
+.card:nth-child(3){animation-delay:0.1s}
+.card:nth-child(4){animation-delay:0.15s}
+.card:nth-child(5){animation-delay:0.2s}
+.card:nth-child(6){animation-delay:0.25s}
+.card:nth-child(7){animation-delay:0.3s}
+.card:nth-child(8){animation-delay:0.35s}
+.card:nth-child(9){animation-delay:0.4s}
+.card:nth-child(10){animation-delay:0.45s}
+@keyframes fadeInUp {
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.card h2 {
+  font-family:'Cinzel',serif;
+  font-size:18px; color:var(--accent);
+  margin-bottom:20px; padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+  letter-spacing:2px;
+}
+
+/* ---- GREETING SCREEN ---- */
+.greeting-overlay {
+  position:fixed; inset:0;
+  background:var(--bg-deep);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  z-index:200; text-align:center;
+  padding:40px;
+  animation:greetFadeIn 1s ease both;
+}
+@keyframes greetFadeIn {
+  from{opacity:0} to{opacity:1}
+}
+.greeting-seal {
+  width:100px; height:100px;
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex; align-items:center;
+  justify-content:center;
+  margin-bottom:24px;
+  box-shadow:0 0 40px var(--accent-glow);
+  animation:greetPulse 3s ease-in-out infinite;
+}
+@keyframes greetPulse {
+  0%,100%{box-shadow:0 0 20px var(--accent-glow)}
+  50%{box-shadow:0 0 50px var(--accent-glow), 0 0 80px rgba(201,162,39,0.1)}
+}
+.greeting-seal .seal-ra { font-size:42px; }
+.greeting-brand {
+  font-family:'Cinzel',serif;
+  font-size:14px; color:var(--accent);
+  letter-spacing:6px; text-transform:uppercase;
+  margin-bottom:8px;
+}
+.greeting-line {
+  width:60px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin:0 auto 32px;
+}
+.greeting-text {
+  font-family:'Raleway',sans-serif;
+  font-size:17px; color:var(--text-secondary);
+  line-height:2; max-width:500px;
+  font-weight:300; font-style:italic;
+  letter-spacing:0.5px;
+  animation:greetTextFade 2s ease both 0.5s;
+}
+@keyframes greetTextFade {
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.greeting-name {
+  color:var(--accent); font-weight:600;
+  font-style:normal;
+}
+.greeting-enter {
+  margin-top:40px; padding:14px 40px;
+  background:transparent;
+  border:1px solid var(--accent);
+  border-radius:30px; color:var(--accent);
+  cursor:pointer; font-family:'Cinzel',serif;
+  font-size:13px; letter-spacing:3px;
+  text-transform:uppercase;
+  transition:all 0.3s;
+  animation:greetBtnFade 1.5s ease both 1.5s;
+}
+@keyframes greetBtnFade {
+  from{opacity:0} to{opacity:1}
+}
+.greeting-enter:hover {
+  background:var(--accent);
+  color:var(--bg-deep);
+  box-shadow:0 0 30px var(--accent-glow);
+}
+
+/* ---- ELEMENT CARD ---- */
+.element-card {
+  border-radius:16px; padding:36px;
+  text-align:center; margin-bottom:24px;
+  position:relative; overflow:hidden;
+  animation:fadeInUp 0.6s ease both 0.1s;
+}
+.element-card.fire {
+  background:linear-gradient(135deg, #1a0505 0%, #2d0a0a 50%, #1a0505 100%);
+  border:1px solid rgba(255,107,53,0.3);
+}
+.element-card.water {
+  background:linear-gradient(135deg, #050d1a 0%, #0a1a2d 50%, #050d1a 100%);
+  border:1px solid rgba(74,144,217,0.3);
+}
+.element-card.earth {
+  background:linear-gradient(135deg, #0d1a05 0%, #152d0a 50%, #0d1a05 100%);
+  border:1px solid rgba(107,143,71,0.3);
+}
+.element-card.air {
+  background:linear-gradient(135deg, #0d051a 0%, #1a0a2d 50%, #0d051a 100%);
+  border:1px solid rgba(155,89,182,0.3);
+}
+.element-icon { font-size:48px; margin-bottom:12px; }
+.element-title {
+  font-family:'Cinzel',serif;
+  font-size:22px; letter-spacing:4px;
+  margin-bottom:4px;
+}
+.element-card.fire .element-title { color:var(--fire); }
+.element-card.water .element-title { color:var(--water); }
+.element-card.earth .element-title { color:var(--earth); }
+.element-card.air .element-title { color:var(--air); }
+.element-subtitle {
+  font-size:12px; color:var(--text-muted);
+  letter-spacing:2px; margin-bottom:20px;
+}
+.element-traits {
+  display:flex; gap:16px; justify-content:center;
+  flex-wrap:wrap; margin-bottom:20px;
+}
+.element-trait {
+  padding:6px 16px; border-radius:20px;
+  font-size:12px; font-weight:500;
+  letter-spacing:1px;
+}
+.element-card.fire .element-trait { background:rgba(255,107,53,0.15); color:var(--fire); border:1px solid rgba(255,107,53,0.2); }
+.element-card.water .element-trait { background:rgba(74,144,217,0.15); color:var(--water); border:1px solid rgba(74,144,217,0.2); }
+.element-card.earth .element-trait { background:rgba(107,143,71,0.15); color:var(--earth); border:1px solid rgba(107,143,71,0.2); }
+.element-card.air .element-trait { background:rgba(155,89,182,0.15); color:var(--air); border:1px solid rgba(155,89,182,0.2); }
+.element-quote {
+  font-style:italic; color:var(--text-secondary);
+  font-size:14px; line-height:1.8;
+  max-width:400px; margin:0 auto;
+}
+
+/* ---- SCORE CARDS ---- */
+.scores-grid {
+  display:grid; gap:14px;
+}
+.score-item {
+  display:flex; align-items:center; gap:16px;
+  padding:16px 20px; background:var(--bg-input);
+  border-radius:10px; border-left:3px solid var(--border);
+}
+.score-item.career { border-left-color:var(--accent); }
+.score-item.love { border-left-color:var(--pink); }
+.score-item.spiritual { border-left-color:var(--air); }
+.score-item.financial { border-left-color:#f59e0b; }
+.score-item.health { border-left-color:var(--success); }
+.score-icon { font-size:24px; min-width:32px; text-align:center; }
+.score-info { flex:1; }
+.score-label {
+  font-size:12px; color:var(--text-secondary);
+  letter-spacing:1px; text-transform:uppercase;
+  margin-bottom:6px; font-weight:600;
+}
+.score-bar-bg {
+  width:100%; height:8px;
+  background:rgba(255,255,255,0.05);
+  border-radius:4px; overflow:hidden;
+}
+.score-bar-fill {
+  height:100%; border-radius:4px;
+  transition:width 1.5s cubic-bezier(0.16,1,0.3,1);
+  width:0;
+}
+.score-item.career .score-bar-fill { background:linear-gradient(90deg, var(--accent), var(--accent-light)); }
+.score-item.love .score-bar-fill { background:linear-gradient(90deg, var(--pink), #f0a0c0); }
+.score-item.spiritual .score-bar-fill { background:linear-gradient(90deg, var(--air), #c9a0e8); }
+.score-item.financial .score-bar-fill { background:linear-gradient(90deg, #f59e0b, #fbbf24); }
+.score-item.health .score-bar-fill { background:linear-gradient(90deg, var(--success), #6bffaa); }
+.score-value {
+  font-family:'Cinzel',serif;
+  font-size:18px; font-weight:700;
+  min-width:45px; text-align:right;
+  color:var(--text-primary);
+}
+
+/* ---- DUALITY CARD ---- */
+.duality-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; border-radius:12px; overflow:hidden;
+}
+.duality-side {
+  padding:24px;
+}
+.duality-light {
+  background:rgba(201,162,39,0.06);
+  border-right:1px solid var(--border);
+}
+.duality-shadow {
+  background:rgba(155,89,182,0.06);
+}
+.duality-header {
+  font-family:'Cinzel',serif;
+  font-size:13px; letter-spacing:2px;
+  margin-bottom:16px; text-transform:uppercase;
+}
+.duality-light .duality-header { color:var(--accent); }
+.duality-shadow .duality-header { color:var(--air); }
+.duality-item {
+  padding:8px 0; font-size:14px;
+  color:var(--text-secondary);
+  border-bottom:1px solid rgba(255,255,255,0.03);
+}
+.duality-item:last-child { border-bottom:none; }
+
+/* ---- PROFILE ---- */
+.profile-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:12px;
+}
+.profile-item {
+  padding:16px; background:var(--bg-input);
+  border-radius:10px;
+  border-left:3px solid var(--accent);
+}
+.profile-item .label {
+  font-size:10px; text-transform:uppercase;
+  letter-spacing:1.5px; color:var(--text-muted);
+  margin-bottom:4px; font-weight:600;
+}
+.profile-item .value {
+  font-size:16px; color:var(--text-primary);
+  font-weight:500;
+}
+
+/* ---- DATA BLOCKS ---- */
+.data-block {
+  background:var(--bg-input); padding:22px;
+  border-radius:12px; margin-bottom:14px;
+  border-left:3px solid var(--accent);
+  transition:all 0.3s;
+}
+.data-block:hover {
+  border-left-color:var(--accent-light);
+  box-shadow:0 2px 12px rgba(0,0,0,0.15);
+}
+.data-block h3 {
+  font-family:'Cinzel',serif;
+  color:var(--accent); font-size:14px;
+  margin-bottom:10px; letter-spacing:1px;
+}
+.detail-row {
+  display:flex; justify-content:space-between;
+  align-items:center; padding:6px 0; font-size:14px;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+}
+.detail-row:last-child { border-bottom:none; }
+.detail-row .key { color:var(--text-muted); font-weight:500; }
+.detail-row .val { color:var(--text-primary); font-weight:600; }
+.description-text {
+  margin-top:10px; color:var(--text-secondary);
+  font-size:14px; line-height:1.8; padding-top:8px;
+  border-top:1px solid rgba(255,255,255,0.03);
+}
+
+/* ---- RECOMMENDATIONS ---- */
+.rec-block {
+  background:var(--bg-input); padding:22px;
+  border-radius:12px; margin-bottom:14px;
+  border-left:3px solid var(--text-muted);
+}
+.rec-block h3 {
+  font-family:'Cinzel',serif;
+  font-size:14px; margin-bottom:10px;
+  letter-spacing:1px;
+}
+.rec-block.career{border-left-color:var(--accent)} .rec-block.career h3{color:var(--accent)}
+.rec-block.relationships{border-left-color:var(--pink)} .rec-block.relationships h3{color:var(--pink)}
+.rec-block.health{border-left-color:var(--success)} .rec-block.health h3{color:var(--success)}
+.rec-block.spiritual{border-left-color:var(--air)} .rec-block.spiritual h3{color:var(--air)}
+.rec-block.strengths{border-left-color:var(--accent-light)} .rec-block.strengths h3{color:var(--accent-light)}
+.rec-block.financial{border-left-color:#f59e0b} .rec-block.financial h3{color:#f59e0b}
+.rec-block.warnings{border-left-color:var(--danger)} .rec-block.warnings h3{color:var(--danger)}
+.rec-block p { color:var(--text-secondary); font-size:14px; line-height:1.9; }
+
+/* ---- LUCKY ---- */
+.lucky-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+  gap:14px;
+}
+.lucky-item {
+  text-align:center; padding:24px 16px;
+  background:var(--bg-input); border-radius:12px;
+  border:1px solid var(--border); transition:all 0.3s;
+}
+.lucky-item:hover {
+  border-color:var(--accent);
+  transform:translateY(-3px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.2);
+}
+.lucky-item .icon { font-size:28px; margin-bottom:8px; }
+.lucky-item .lucky-label {
+  font-size:10px; text-transform:uppercase;
+  letter-spacing:1.5px; color:var(--text-muted);
+  font-weight:600;
+}
+.lucky-item .lucky-value {
+  font-family:'Cinzel',serif;
+  font-size:18px; color:var(--accent);
+  font-weight:700; margin-top:4px;
+}
+
+/* ---- NOTES ---- */
+.notes-content {
+  color:var(--text-secondary); font-size:15px;
+  line-height:2; white-space:pre-wrap;
+}
+.no-data {
+  text-align:center; padding:30px;
+  color:var(--text-muted); font-style:italic;
+  font-size:14px;
+}
+.meta-info {
+  text-align:center; color:var(--text-muted);
+  font-size:11px; letter-spacing:1px;
+  font-family:'Cinzel',serif;
+}
+
+/* ---- WATERMARK ---- */
+.watermark {
+  text-align:center; padding:40px 20px;
+  border-top:1px solid var(--border);
+  margin-top:20px;
+}
+.watermark-text {
+  font-family:'Cinzel',serif;
+  font-size:11px; color:var(--text-muted);
+  letter-spacing:4px; text-transform:uppercase;
+}
+.watermark-seal {
+  display:inline-flex;
+  width:28px; height:28px;
+  border:1px solid var(--text-muted);
+  border-radius:50%;
+  align-items:center; justify-content:center;
+  font-family:'Cinzel',serif;
+  color:var(--text-muted); font-size:12px;
+  margin-bottom:8px;
+}
+
+/* ---- ADMIN (Basic for Phase 1) ---- */
+.form-row {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:16px;
+}
+.friend-item {
+  display:flex; align-items:center;
+  justify-content:space-between;
+  padding:16px 20px; background:var(--bg-input);
+  border-radius:12px; cursor:pointer;
+  transition:all 0.2s;
+  border:1px solid transparent;
+  margin-bottom:8px;
+}
+.friend-item:hover { border-color:var(--accent); }
+.friend-item.active { border-color:var(--accent); background:rgba(201,162,39,0.04); }
+.friend-name {
+  font-family:'Cinzel',serif;
+  font-weight:600; font-size:15px;
+  letter-spacing:1px;
+}
+.friend-meta { font-size:12px; color:var(--text-muted); margin-top:2px; }
+.friend-actions { display:flex; gap:8px; }
+
+.tab-nav {
+  display:flex; gap:4px; margin-bottom:24px;
+  overflow-x:auto; padding-bottom:4px;
+  scrollbar-width:none;
+}
+.tab-nav::-webkit-scrollbar { display:none; }
+.tab-btn {
+  padding:10px 18px; background:var(--bg-input);
+  border:1px solid var(--border); border-radius:8px;
+  color:var(--text-secondary); cursor:pointer;
+  font-size:12px; white-space:nowrap;
+  transition:all 0.2s;
+  font-family:'Cinzel',serif;
+  letter-spacing:1px;
+}
+.tab-btn.active {
+  background:var(--accent); color:var(--bg-deep);
+  border-color:var(--accent); font-weight:700;
+}
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+.editor-block {
+  background:var(--bg-input); padding:22px;
+  border-radius:12px; margin-bottom:16px;
+  border-left:3px solid var(--border-light);
+}
+.editor-block h3 {
+  font-family:'Cinzel',serif;
+  color:var(--border-light); font-size:14px;
+  margin-bottom:14px; letter-spacing:1px;
+}
+
+.mode-badge {
+  display:inline-block; padding:4px 12px;
+  border-radius:20px; font-size:10px;
+  font-weight:700; text-transform:uppercase;
+  letter-spacing:2px;
+  background:rgba(201,162,39,0.15);
+  color:var(--accent);
+  border:1px solid rgba(201,162,39,0.3);
+  font-family:'Cinzel',serif;
+}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:600px) {
+  .login-card { padding:36px 24px; margin:16px; }
+  .card { padding:22px; }
+  .dashboard-nav { padding:12px 16px; }
+  .form-row { grid-template-columns:1fr; }
+  .profile-grid { grid-template-columns:1fr 1fr; }
+  .lucky-grid { grid-template-columns:repeat(2, 1fr); }
+  .nav-user { display:none; }
+  .duality-grid { grid-template-columns:1fr; }
+  .duality-light { border-right:none; border-bottom:1px solid var(--border); }
+  .greeting-text { font-size:15px; }
+  .brand-title { font-size:20px; letter-spacing:2px; }
+  .element-title { font-size:18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-seal"></div>
+  <div class="loading-text">Karmarekha</div>
+</div>
+
+<!-- GREETING OVERLAY -->
+<div class="greeting-overlay" id="greetingOverlay" style="display:none;">
+  <div class="greeting-seal">
+    <span class="seal-ra">र</span>
+  </div>
+  <div class="greeting-brand">✦ KARMAREKHA ✦</div>
+  <div class="greeting-line"></div>
+  <div class="greeting-text" id="greetingText"></div>
+  <button class="greeting-enter" onclick="enterDashboard()">Enter My Reading →</button>
+</div>
+
+<!-- PAGE 1: LOGIN -->
+<div id="loginPage" class="page">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="seal-logo">
+        <div class="seal-outer"></div>
+        <div class="seal-lines"></div>
+        <span class="seal-ra">र</span>
+      </div>
+      <div class="brand-title">KARMAREKHA</div>
+      <div class="brand-subtitle">by Raj</div>
+      <p class="login-tagline">The lines of your destiny await</p>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="loginName" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label>Date of Birth</label>
+        <input type="date" id="loginDob">
+      </div>
+      <button class="btn-primary" onclick="handleLogin()">Unlock Reading</button>
+      <div id="loginError" style="display:none;" class="error-msg"></div>
+      <div class="admin-link">
+        <p>Sacred Access</p>
+        <button class="btn-secondary" onclick="showPage('adminPage')">🔑 Admin Panel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: DASHBOARD -->
+<div id="dashboardPage" class="page">
+  <nav class="dashboard-nav">
+    <div class="nav-brand">
+      <div class="nav-seal">र</div>
+      <span class="nav-logo">KARMAREKHA</span>
+    </div>
+    <div class="nav-right">
+      <span id="navUserName" class="nav-user"></span>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+  <div class="dashboard-container" id="dashboardContent"></div>
+</div>
+
+<!-- PAGE 3: ADMIN -->
+<div id="adminPage" class="page">
+  <nav class="dashboard-nav">
+    <div class="nav-brand">
+      <div class="nav-seal">र</div>
+      <span class="nav-logo">KARMAREKHA</span>
+    </div>
+    <div class="nav-right">
+      <span class="mode-badge">Admin</span>
+      <button class="btn-logout" onclick="logout()">← Back</button>
+    </div>
+  </nav>
+  <div class="dashboard-container">
+    <div id="adminLoginSection">
+      <div class="card" style="max-width:440px;margin:40px auto;">
+        <h2>Sacred Access</h2>
+        <div class="form-group">
+          <label>Admin Password</label>
+          <input type="password" id="adminPasswordInput" placeholder="Enter sacred password">
+        </div>
+        <button class="btn-primary" onclick="adminAuthenticate()">Enter</button>
+        <div id="adminLoginError" style="display:none;" class="error-msg"></div>
+      </div>
+    </div>
+    <div id="adminContent" style="display:none;">
+      <div class="card">
+        <h2>Add New Soul</h2>
+        <div class="form-row">
+          <div class="form-group"><label>Name *</label><input type="text" id="newName" placeholder="Friend's name"></div>
+          <div class="form-group"><label>Date of Birth *</label><input type="date" id="newDob"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Gender</label><select id="newGender"><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+          <div class="form-group"><label>Dominant Hand</label><select id="newHand"><option value="Right">Right</option><option value="Left">Left</option><option value="Ambidextrous">Ambidextrous</option></select></div>
+        </div>
+        <button class="btn-primary" onclick="addFriend()">✦ Add Soul</button>
+      </div>
+      <div class="card">
+        <h2>Souls Under Reading (<span id="friendCount">0</span>)</h2>
+        <div id="friendsList"></div>
+      </div>
+      <div id="editSection" style="display:none;">
+        <div class="card">
+          <h2>Editing: <span id="editingFriendName"></span></h2>
+          <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(this,'tabLines')">Lines</button>
+            <button class="tab-btn" onclick="switchTab(this,'tabMounts')">Mounts</button>
+            <button class="tab-btn" onclick="switchTab(this,'tabFingers')">Fingers</button>
+            <button class="tab-btn" onclick="switchTab(this,'tabMarkings')">Markings</button>
+            <button class="tab-btn" onclick="switchTab(this,'tabRecs')">Readings</button>
+            <button class="tab-btn" onclick="switchTab(this,'tabNotes')">Notes</button>
+          </div>
+          <div id="tabLines" class="tab-content active"><div id="linesEditorContent"></div><button class="btn-primary" onclick="saveSection('lines')" style="margin-top:16px;">Save Lines</button></div>
+          <div id="tabMounts" class="tab-content"><div id="mountsEditorContent"></div><button class="btn-primary" onclick="saveSection('mounts')" style="margin-top:16px;">Save Mounts</button></div>
+          <div id="tabFingers" class="tab-content"><div id="fingersEditorContent"></div><button class="btn-primary" onclick="saveSection('fingers')" style="margin-top:16px;">Save Fingers</button></div>
+          <div id="tabMarkings" class="tab-content"><div id="markingsEditorContent"></div><button class="btn-primary" onclick="saveSection('markings')" style="margin-top:16px;">Save Markings</button></div>
+          <div id="tabRecs" class="tab-content"><div id="recsEditorContent"></div><button class="btn-primary" onclick="saveSection('recommendations')" style="margin-top:16px;">Save Readings</button></div>
+          <div id="tabNotes" class="tab-content">
+            <div class="form-group"><label>Hand Shape</label><select id="editHandShape"><option value="">Select</option><option value="Earth">Earth (Square palm, short fingers)</option><option value="Air">Air (Square palm, long fingers)</option><option value="Water">Water (Long palm, long fingers)</option><option value="Fire">Fire (Long palm, short fingers)</option><option value="Mixed">Mixed</option></select></div>
+            <div class="form-group"><label>Personal Notes</label><textarea id="editPersonalNotes" rows="10" placeholder="Detailed reading notes..."></textarea></div>
+            <button class="btn-primary" onclick="saveSection('notes')">Save Notes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE + APP LOGIC -->
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import{getFirestore,collection,doc,setDoc,getDoc,getDocs,updateDoc,deleteDoc}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+const app=initializeApp({
+  apiKey:"AIzaSyCMWF1hMCm2D9N-qzydx33Jdcm-KyxTzaA",
+  authDomain:"palmistry-vault.firebaseapp.com",
+  projectId:"palmistry-vault",
+  storageBucket:"palmistry-vault.firebasestorage.app",
+  messagingSenderId:"731739632047",
+  appId:"1:731739632047:web:2d508e40809629889f3f5a"
+});
+const db=getFirestore(app);
+const ADMIN_PASSWORD='mypalm2024';
+
+// PARTICLES
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');
+    p.className='particle '+(Math.random()>0.4?'gold':'purple');
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(10+Math.random()*20)+'s';
+    p.style.animationDelay=Math.random()*15+'s';
+    p.style.width=p.style.height=(1+Math.random()*2.5)+'px';
+    c.appendChild(p);
+  }
+})();
+
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loadingOverlay').style.display='none';
+    showPage('loginPage');
+  },1800);
+});
+
+// TOAST
+function showToast(m,t='success'){
+  const o=document.querySelector('.toast');if(o)o.remove();
+  const d=document.createElement('div');
+  d.className=`toast ${t}`;d.textContent=m;
+  document.body.appendChild(d);
+  setTimeout(()=>d.classList.add('show'),20);
+  setTimeout(()=>{d.classList.remove('show');setTimeout(()=>d.remove(),400);},3500);
+}
+
+// LOADING
+function showLoading(t='Loading...'){
+  const o=document.getElementById('loadingOverlay');
+  o.querySelector('.loading-text').textContent=t;
+  o.style.display='flex';
+}
+function hideLoading(){document.getElementById('loadingOverlay').style.display='none';}
+
+// PAGES
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+window.showPage=showPage;
+
+window.logout=function(){
+  document.getElementById('loginName').value='';
+  document.getElementById('loginDob').value='';
+  document.getElementById('adminPasswordInput').value='';
+  document.getElementById('adminLoginSection').style.display='block';
+  document.getElementById('adminContent').style.display='none';
+  document.getElementById('greetingOverlay').style.display='none';
+  showPage('loginPage');
+};
+
+// AI GREETING GENERATOR
+function generateGreeting(user){
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const today=days[new Date().getDay()];
+  const planetMap={Sunday:'Sun',Monday:'Moon',Tuesday:'Mars',Wednesday:'Mercury',Thursday:'Jupiter',Friday:'Venus',Saturday:'Saturn'};
+  const planet=planetMap[today];
+  const el=user.handShape||'';
+  const name=user.name.split(' ')[0];
+  const mounts=user.mounts||{};
+  const dominantMount=Object.entries(mounts).find(([k,v])=>v&&v.development&&v.development.includes('Well'))?.[0]||'';
+  const mountNames={jupiter:'Jupiter',saturn:'Saturn',apollo:'Apollo',mercury_mount:'Mercury',venus:'Venus',moon:'Moon',mars_positive:'Mars',mars_negative:'Mars',plain_of_mars:'Mars'};
+  const mountLabel=mountNames[dominantMount]||'the cosmos';
+
+  const greetings=[
+    `Namaste, <span class="greeting-name">${name}</span> 🙏\n\nToday is ${today}.\n${planet} governs this day, aligning with ${mountLabel} in your palm.\n\nYour ${el||'unique'} hand carries ancient wisdom.\nWhat your lines reveal is not fate —\nit is potential waiting to be awakened.\n\nWalk with awareness.`,
+    `Welcome back, <span class="greeting-name">${name}</span> ✦\n\nThe stars mark ${today} under ${planet}'s watch.\nYour palm speaks of ${mountLabel}'s influence —\na force that shapes your path.\n\nThe lines on your hand are not chains.\nThey are rivers of possibility.\n\nRead with an open heart.`,
+    `<span class="greeting-name">${name}</span>, the seeker returns. 🪷\n\nOn this ${today}, ${planet} whispers through ${mountLabel}.\nYour ${el||'extraordinary'} hand holds the map\nof a journey already begun.\n\nEvery line is a conversation\nbetween your past and your becoming.\n\nListen closely.`,
+    `Greetings, <span class="greeting-name">${name}</span> ॐ\n\n${today} brings ${planet}'s energy to your doorstep.\nThe mount of ${mountLabel} in your palm\nresonates with today's cosmic frequency.\n\nYou do not read your palm to know the future.\nYou read it to understand yourself.\n\nBegin.`
+  ];
+  return greetings[Math.floor(Math.random()*greetings.length)];
+}
+
+// ELEMENT DATA
+function getElementData(handShape){
+  const elements={
+    Fire:{icon:'🔥',title:'YOU ARE FIRE',sub:'Long palm · Short fingers · The Sovereign',cls:'fire',traits:['Passionate','Courageous','Visionary','Magnetic','Bold','Restless'],quote:'Born to lead, not follow. The world feels your energy before you enter the room.'},
+    Water:{icon:'🌊',title:'YOU ARE WATER',sub:'Long palm · Long fingers · The Mystic',cls:'water',traits:['Intuitive','Emotional','Creative','Empathetic','Dreamy','Perceptive'],quote:'The deepest rivers are the quietest. Your intuition sees what eyes cannot.'},
+    Earth:{icon:'🌿',title:'YOU ARE EARTH',sub:'Square palm · Short fingers · The Builder',cls:'earth',traits:['Practical','Reliable','Grounded','Patient','Loyal','Steadfast'],quote:'Mountains do not rush to grow. Your strength is in your stillness and certainty.'},
+    Air:{icon:'💨',title:'YOU ARE AIR',sub:'Square palm · Long fingers · The Thinker',cls:'air',traits:['Intellectual','Communicative','Curious','Analytical','Social','Restless'],quote:'The wind touches everything. Your mind connects worlds others cannot see.'},
+    Mixed:{icon:'✨',title:'YOU ARE MULTIFOLD',sub:'A blend of elements · The Alchemist',cls:'air',traits:['Versatile','Adaptive','Complex','Multi-talented','Unpredictable','Dynamic'],quote:'You are not one thing. You are the meeting point of all elements. That is your power.'}
+  };
+  return elements[handShape]||elements.Mixed;
+}
+
+// SCORE CALCULATOR
+function calculateScores(user){
+  let career=50,love=50,spiritual=50,financial=50,health=50;
+  const m=user.mounts||{};const l=user.lines||{};
+  if(m.jupiter?.development?.includes('Well'))career+=15;
+  if(m.apollo?.development?.includes('Well'))career+=10;
+  if(m.saturn?.development?.includes('Well'))career+=8;
+  if(l.fate?.quality?.includes('Clear'))career+=12;
+  if(l.sun?.length&&l.sun.length!=='Absent')career+=10;
+  if(m.venus?.development?.includes('Well'))love+=15;
+  if(l.heart?.quality?.includes('Clear'))love+=12;
+  if(l.heart?.length?.includes('Long'))love+=8;
+  if(l.marriage?.count&&parseInt(l.marriage.count)>=1)love+=10;
+  if(m.moon?.development?.includes('Well'))spiritual+=15;
+  if(m.saturn?.development?.includes('Well'))spiritual+=10;
+  if(l.head?.quality?.includes('Clear'))spiritual+=8;
+  if(m.mercury_mount?.development?.includes('Well'))financial+=15;
+  if(l.fate?.quality?.includes('Clear'))financial+=10;
+  if(m.jupiter?.development?.includes('Well'))financial+=8;
+  if(l.life?.quality?.includes('Clear'))health+=15;
+  if(l.life?.depth?.includes('Deep'))health+=10;
+  if(l.life?.length?.includes('Long'))health+=8;
+  if(m.venus?.development?.includes('Well'))health+=7;
+  const cap=v=>Math.min(Math.max(v,30),97);
+  return{career:cap(career),love:cap(love),spiritual:cap(spiritual),financial:cap(financial),health:cap(health)};
+}
+
+// DUALITY GENERATOR
+function generateDuality(user){
+  const m=user.mounts||{};const l=user.lines||{};
+  const light=[],shadow=[];
+  if(m.jupiter?.development?.includes('Well')){light.push('Natural Leader');shadow.push('Can Be Dominating');}
+  if(m.venus?.development?.includes('Well')){light.push('Deeply Loving');shadow.push('Over-Attached');}
+  if(m.moon?.development?.includes('Well')){light.push('Highly Intuitive');shadow.push('Overthinks');}
+  if(m.mercury_mount?.development?.includes('Well')){light.push('Quick-Witted');shadow.push('Restless Mind');}
+  if(m.apollo?.development?.includes('Well')){light.push('Creatively Gifted');shadow.push('Seeks Validation');}
+  if(m.saturn?.development?.includes('Well')){light.push('Disciplined');shadow.push('Overly Serious');}
+  if(m.mars_positive?.development?.includes('Well')){light.push('Courageously Bold');shadow.push('Aggressive Streak');}
+  if(l.heart?.quality?.includes('Clear')){light.push('Emotionally Balanced');shadow.push('Guards Heart Too Much');}
+  if(l.head?.quality?.includes('Clear')){light.push('Sharp Thinker');shadow.push('Cold Logic');}
+  if(light.length===0){light.push('Unique Soul','Evolving Spirit','Hidden Potential');shadow.push('Self-Doubt','Scattered Focus','Untapped Depth');}
+  return{light:light.slice(0,5),shadow:shadow.slice(0,5)};
+}
+
+// FIRESTORE HELPERS
+async function getAllUsers(){const s=await getDocs(collection(db,'users'));return s.docs.map(d=>({id:d.id,...d.data()}));}
+async function getUserById(id){const s=await getDoc(doc(db,'users',id));if(!s.exists())return null;return{id:s.id,...s.data()};}
+
+function createEmptyUser(name,dob,gender,hand){
+  return{name:name.trim(),dob,gender:gender||'',dominantHand:hand||'Right',handShape:'',
+    lines:{heart:{description:'',quality:'',length:'',depth:'',branches:''},head:{description:'',quality:'',length:'',depth:'',branches:''},life:{description:'',quality:'',length:'',depth:'',branches:''},fate:{description:'',quality:'',length:'',depth:'',branches:''},sun:{description:'',quality:'',length:'',depth:'',branches:''},mercury:{description:'',quality:'',length:'',depth:'',branches:''},marriage:{description:'',count:'',quality:''},girdle_of_venus:{description:'',present:''},rascettes:{description:'',count:''}},
+    mounts:{jupiter:{development:'',description:''},saturn:{development:'',description:''},apollo:{development:'',description:''},mercury_mount:{development:'',description:''},venus:{development:'',description:''},moon:{development:'',description:''},mars_positive:{development:'',description:''},mars_negative:{development:'',description:''},plain_of_mars:{development:'',description:''}},
+    fingers:{thumb:{length:'',flexibility:'',phalanges:'',tip_shape:'',description:''},index:{length:'',leaning:'',tip_shape:'',description:''},middle:{length:'',leaning:'',tip_shape:'',description:''},ring:{length:'',leaning:'',tip_shape:'',description:''},little:{length:'',leaning:'',tip_shape:'',description:''}},
+    specialMarkings:{crosses:[],stars:[],islands:[],squares:[],triangles:[],grilles:[],dots:[],tridents:[]},
+    recommendations:{career:'',relationships:'',health:'',spiritual:'',financialTendency:'',strengths:'',weaknesses:'',warnings:'',luckyElements:{color:'',number:'',day:'',gemstone:''}},
+    personalNotes:'',createdDate:new Date().toISOString(),lastUpdated:new Date().toISOString()};
+}
+
+// LOGIN
+let currentUser=null;
+window.handleLogin=async function(){
+  const name=document.getElementById('loginName').value.trim();
+  const dob=document.getElementById('loginDob').value;
+  const err=document.getElementById('loginError');
+  err.style.display='none';
+  if(!name||!dob){err.textContent='Enter both name and date of birth.';err.style.display='block';return;}
+  showLoading('Consulting the stars...');
+  try{
+    const users=await getAllUsers();
+    let found=null;
+    users.forEach(u=>{if(u.name.toLowerCase()===name.toLowerCase()&&u.dob===dob)found=u;});
+    hideLoading();
+    if(!found){err.textContent='Name or date of birth incorrect.';err.style.display='block';return;}
+    currentUser=found;
+    // Show greeting
+    document.getElementById('greetingText').innerHTML=generateGreeting(found);
+    document.getElementById('greetingOverlay').style.display='flex';
+  }catch(e){hideLoading();err.textContent='Connection error. Try again.';err.style.display='block';console.error(e);}
+};
+
+window.enterDashboard=function(){
+  document.getElementById('greetingOverlay').style.display='none';
+  renderDashboard(currentUser);
+  showPage('dashboardPage');
+};
+
+// ADMIN
+window.adminAuthenticate=function(){
+  const p=document.getElementById('adminPasswordInput').value;
+  const e=document.getElementById('adminLoginError');
+  if(p!==ADMIN_PASSWORD){e.textContent='Wrong password.';e.style.display='block';return;}
+  e.style.display='none';
+  document.getElementById('adminLoginSection').style.display='none';
+  document.getElementById('adminContent').style.display='block';
+  loadFriendsList();
+};
+
+window.addFriend=async function(){
+  const name=document.getElementById('newName').value.trim();
+  const dob=document.getElementById('newDob').value;
+  const gender=document.getElementById('newGender').value;
+  const hand=document.getElementById('newHand').value;
+  if(!name||!dob){showToast('Name and DOB required!','error');return;}
+  showLoading('Adding soul...');
+  try{
+    const users=await getAllUsers();
+    if(users.find(u=>u.name.toLowerCase()===name.toLowerCase())){hideLoading();showToast('Name already exists!','error');return;}
+    const nu=createEmptyUser(name,dob,gender,hand);
+    await setDoc(doc(collection(db,'users')),nu);
+    document.getElementById('newName').value='';document.getElementById('newDob').value='';
+    document.getElementById('newGender').value='';document.getElementById('newHand').value='Right';
+    hideLoading();showToast(`${name} added ✦`);loadFriendsList();
+  }catch(e){hideLoading();showToast('Error adding.','error');console.error(e);}
+};
+
+let currentEditId=null;
+async function loadFriendsList(){
+  showLoading('Loading souls...');
+  try{
+    const users=await getAllUsers();hideLoading();
+    document.getElementById('friendCount').textContent=users.length;
+    const c=document.getElementById('friendsList');
+    if(!users.length){c.innerHTML='<div class="no-data">No souls added yet</div>';return;}
+    c.innerHTML=users.map(u=>`
+      <div class="friend-item ${currentEditId===u.id?'active':''}" onclick="selectFriend('${u.id}')">
+        <div><div class="friend-name">${u.name}</div><div class="friend-meta">DOB: ${formatDate(u.dob)} · ${u.gender||'N/A'} · ${u.dominantHand}</div></div>
+        <div class="friend-actions">
+          <button class="btn-secondary" onclick="event.stopPropagation();selectFriend('${u.id}')">✏️</button>
+          <button class="btn-danger" onclick="event.stopPropagation();deleteFriend('${u.id}','${u.name}')">🗑️</button>
+        </div>
+      </div>`).join('');
+  }catch(e){hideLoading();showToast('Error loading.','error');}
+}
+
+window.deleteFriend=async function(id,name){
+  if(!confirm(`Delete ${name}?`))return;
+  showLoading('Removing...');
+  try{await deleteDoc(doc(db,'users',id));if(currentEditId===id){currentEditId=null;document.getElementById('editSection').style.display='none';}
+    hideLoading();showToast(`${name} removed.`);loadFriendsList();}catch(e){hideLoading();showToast('Error.','error');}
+};
+
+window.selectFriend=async function(id){
+  showLoading('Loading...');
+  try{const u=await getUserById(id);if(!u){hideLoading();return;}
+    currentEditId=id;hideLoading();
+    document.getElementById('editingFriendName').textContent=u.name;
+    document.getElementById('editSection').style.display='block';
+    loadFriendsList();renderAllEditors(u);
+    document.getElementById('editSection').scrollIntoView({behavior:'smooth'});
+  }catch(e){hideLoading();showToast('Error.','error');}
+};
+
+window.switchTab=function(btn,tabId){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');btn.classList.add('active');
+};
+
+// EDITORS
+function renderAllEditors(u){renderLinesEditor(u);renderMountsEditor(u);renderFingersEditor(u);renderMarkingsEditor(u);renderRecsEditor(u);renderNotesEditor(u);}
+
+function renderLinesEditor(u){
+  const l=u.lines||{};
+  const c=[{k:'heart',l:'Heart Line',f:['quality','length','depth','branches','description']},{k:'head',l:'Head Line',f:['quality','length','depth','branches','description']},{k:'life',l:'Life Line',f:['quality','length','depth','branches','description']},{k:'fate',l:'Fate Line',f:['quality','length','depth','branches','description']},{k:'sun',l:'Sun Line',f:['quality','length','depth','branches','description']},{k:'mercury',l:'Mercury Line',f:['quality','length','depth','branches','description']},{k:'marriage',l:'Marriage Line',f:['count','quality','description']},{k:'girdle_of_venus',l:'Girdle of Venus',f:['present','description']},{k:'rascettes',l:'Rascettes',f:['count','description']}];
+  let h='';
+  c.forEach(x=>{const ln=l[x.k]||{};h+=`<div class="editor-block"><h3>${x.l}</h3>`;
+    x.f.forEach(f=>{const v=ln[f]||'';
+      if(f==='description')h+=`<div class="form-group"><label>${f}</label><textarea id="ed_l_${x.k}_${f}" rows="3">${v}</textarea></div>`;
+      else h+=`<div class="form-group"><label>${f}</label><input type="text" id="ed_l_${x.k}_${f}" value="${v}"></div>`;
+    });h+=`</div>`;});
+  document.getElementById('linesEditorContent').innerHTML=h;
+}
+
+function renderMountsEditor(u){
+  const m=u.mounts||{};
+  const c=[{k:'jupiter',l:'Jupiter'},{k:'saturn',l:'Saturn'},{k:'apollo',l:'Apollo'},{k:'mercury_mount',l:'Mercury'},{k:'venus',l:'Venus'},{k:'moon',l:'Moon'},{k:'mars_positive',l:'Mars +'},{k:'mars_negative',l:'Mars −'},{k:'plain_of_mars',l:'Plain of Mars'}];
+  const opts=['Well-developed','Moderately developed','Underdeveloped','Flat','Overdeveloped'];
+  let h='';
+  c.forEach(x=>{const mt=m[x.k]||{};
+    h+=`<div class="editor-block"><h3>${x.l}</h3>
+    <div class="form-group"><label>Development</label><select id="ed_m_${x.k}_d"><option value="">Select</option>${opts.map(o=>`<option value="${o}"${mt.development===o?' selected':''}>${o}</option>`).join('')}</select></div>
+    <div class="form-group"><label>Description</label><textarea id="ed_m_${x.k}_desc" rows="3">${mt.description||''}</textarea></div></div>`;});
+  document.getElementById('mountsEditorContent').innerHTML=h;
+}
+
+function renderFingersEditor(u){
+  const f=u.fingers||{};
+  const c=[{k:'thumb',l:'Thumb',ex:['flexibility','phalanges']},{k:'index',l:'Index',ex:['leaning']},{k:'middle',l:'Middle',ex:['leaning']},{k:'ring',l:'Ring',ex:['leaning']},{k:'little',l:'Little',ex:['leaning']}];
+  let h='';
+  c.forEach(x=>{const fg=f[x.k]||{};
+    h+=`<div class="editor-block"><h3>${x.l}</h3>
+    <div class="form-row"><div class="form-group"><label>Length</label><input type="text" id="ed_f_${x.k}_len" value="${fg.length||''}"></div>
+    <div class="form-group"><label>Tip Shape</label><input type="text" id="ed_f_${x.k}_tip" value="${fg.tip_shape||''}"></div></div>`;
+    x.ex.forEach(e=>{h+=`<div class="form-group"><label>${e}</label><input type="text" id="ed_f_${x.k}_${e}" value="${fg[e]||''}"></div>`;});
+    h+=`<div class="form-group"><label>Description</label><textarea id="ed_f_${x.k}_desc" rows="2">${fg.description||''}</textarea></div></div>`;});
+  document.getElementById('fingersEditorContent').innerHTML=h;
+}
+
+function renderMarkingsEditor(u){
+  const mk=u.specialMarkings||{};
+  const t=['crosses','stars','islands','squares','triangles','grilles','dots','tridents'];
+  let h='';t.forEach(tp=>{const items=mk[tp]||[];
+    h+=`<div class="editor-block"><h3>${tp.charAt(0).toUpperCase()+tp.slice(1)}</h3>
+    <div class="form-group"><label>One per line</label><textarea id="ed_mk_${tp}" rows="3">${items.join('\n')}</textarea></div></div>`;});
+  document.getElementById('markingsEditorContent').innerHTML=h;
+}
+
+function renderRecsEditor(u){
+  const r=u.recommendations||{};const lk=r.luckyElements||{};
+  const flds=[{k:'strengths',l:'Strengths'},{k:'weaknesses',l:'Growth Areas'},{k:'career',l:'Career'},{k:'relationships',l:'Relationships'},{k:'health',l:'Health'},{k:'spiritual',l:'Spiritual'},{k:'financialTendency',l:'Financial'},{k:'warnings',l:'Warnings'}];
+  let h='';flds.forEach(f=>{h+=`<div class="editor-block"><h3>${f.l}</h3><div class="form-group"><textarea id="ed_r_${f.k}" rows="4">${r[f.k]||''}</textarea></div></div>`;});
+  h+=`<div class="editor-block"><h3>Lucky Elements</h3>
+  <div class="form-row"><div class="form-group"><label>Color</label><input type="text" id="ed_lk_color" value="${lk.color||''}"></div>
+  <div class="form-group"><label>Number</label><input type="text" id="ed_lk_number" value="${lk.number||''}"></div></div>
+  <div class="form-row"><div class="form-group"><label>Day</label><input type="text" id="ed_lk_day" value="${lk.day||''}"></div>
+  <div class="form-group"><label>Gemstone</label><input type="text" id="ed_lk_gemstone" value="${lk.gemstone||''}"></div></div></div>`;
+  document.getElementById('recsEditorContent').innerHTML=h;
+}
+
+function renderNotesEditor(u){
+  document.getElementById('editHandShape').value=u.handShape||'';
+  document.getElementById('editPersonalNotes').value=u.personalNotes||'';
+}
+
+// SAVE
+window.saveSection=async function(section){
+  if(!currentEditId)return;showLoading('Saving...');
+  try{
+    let updates={};
+    if(section==='lines'){
+      const keys=['heart','head','life','fate','sun','mercury','marriage','girdle_of_venus','rascettes'];
+      const fm={heart:['quality','length','depth','branches','description'],head:['quality','length','depth','branches','description'],life:['quality','length','depth','branches','description'],fate:['quality','length','depth','branches','description'],sun:['quality','length','depth','branches','description'],mercury:['quality','length','depth','branches','description'],marriage:['count','quality','description'],girdle_of_venus:['present','description'],rascettes:['count','description']};
+      updates.lines={};keys.forEach(k=>{updates.lines[k]={};fm[k].forEach(f=>{const el=document.getElementById(`ed_l_${k}_${f}`);if(el)updates.lines[k][f]=el.value;});});
+    }
+    if(section==='mounts'){
+      const keys=['jupiter','saturn','apollo','mercury_mount','venus','moon','mars_positive','mars_negative','plain_of_mars'];
+      updates.mounts={};keys.forEach(k=>{updates.mounts[k]={development:document.getElementById(`ed_m_${k}_d`).value,description:document.getElementById(`ed_m_${k}_desc`).value};});
+    }
+    if(section==='fingers'){
+      const cfg={thumb:['len','tip','flexibility','phalanges','desc'],index:['len','tip','leaning','desc'],middle:['len','tip','leaning','desc'],ring:['len','tip','leaning','desc'],little:['len','tip','leaning','desc']};
+      updates.fingers={};for(const[k,flds]of Object.entries(cfg)){updates.fingers[k]={};flds.forEach(f=>{const el=document.getElementById(`ed_f_${k}_${f}`);if(el){const rk=f==='len'?'length':f==='tip'?'tip_shape':f==='desc'?'description':f;updates.fingers[k][rk]=el.value;}});}
+    }
+    if(section==='markings'){
+      const types=['crosses','stars','islands','squares','triangles','grilles','dots','tridents'];
+      updates.specialMarkings={};types.forEach(t=>{const txt=document.getElementById(`ed_mk_${t}`).value;updates.specialMarkings[t]=txt.split('\n').map(s=>s.trim()).filter(s=>s);});
+    }
+    if(section==='recommendations'){
+      const flds=['career','relationships','health','spiritual','financialTendency','strengths','weaknesses','warnings'];
+      updates.recommendations={};flds.forEach(f=>{updates.recommendations[f]=document.getElementById(`ed_r_${f}`).value;});
+      updates.recommendations.luckyElements={color:document.getElementById('ed_lk_color').value,number:document.getElementById('ed_lk_number').value,day:document.getElementById('ed_lk_day').value,gemstone:document.getElementById('ed_lk_gemstone').value};
+    }
+    if(section==='notes'){updates.handShape=document.getElementById('editHandShape').value;updates.personalNotes=document.getElementById('editPersonalNotes').value;}
+    updates.lastUpdated=new Date().toISOString();
+    await updateDoc(doc(db,'users',currentEditId),updates);
+    hideLoading();showToast(`${section.charAt(0).toUpperCase()+section.slice(1)} saved ✦`);
+  }catch(e){hideLoading();showToast('Error saving.','error');console.error(e);}
+};
+
+// DASHBOARD
+function renderDashboard(user){
+  document.getElementById('navUserName').textContent=user.name;
+  let html='';
+
+  // Profile
+  html+=`<section class="card"><h2>Profile</h2><div class="profile-grid">
+    <div class="profile-item"><div class="label">Name</div><div class="value">${user.name}</div></div>
+    <div class="profile-item"><div class="label">Date of Birth</div><div class="value">${formatDate(user.dob)}</div></div>
+    <div class="profile-item"><div class="label">Gender</div><div class="value">${user.gender||'—'}</div></div>
+    <div class="profile-item"><div class="label">Dominant Hand</div><div class="value">${user.dominantHand||'Right'}</div></div>
+  </div></section>`;
+
+  // Element Card
+  const elData=getElementData(user.handShape);
+  html+=`<div class="element-card ${elData.cls}">
+    <div class="element-icon">${elData.icon}</div>
+    <div class="element-title">${elData.title}</div>
+    <div class="element-subtitle">${elData.sub}</div>
+    <div class="element-traits">${elData.traits.map(t=>`<span class="element-trait">${t}</span>`).join('')}</div>
+    <div class="element-quote">"${elData.quote}"</div>
+  </div>`;
+
+  // Scores
+  const scores=calculateScores(user);
+  html+=`<section class="card"><h2>Life Path Forces</h2><div class="scores-grid">
+    <div class="score-item career"><div class="score-icon">⚡</div><div class="score-info"><div class="score-label">Career Force</div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0" data-target="${scores.career}"></div></div></div><div class="score-value">${scores.career}%</div></div>
+    <div class="score-item love"><div class="score-icon">💗</div><div class="score-info"><div class="score-label">Love Energy</div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0" data-target="${scores.love}"></div></div></div><div class="score-value">${scores.love}%</div></div>
+    <div class="score-item spiritual"><div class="score-icon">🧘</div><div class="score-info"><div class="score-label">Spiritual Depth</div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0" data-target="${scores.spiritual}"></div></div></div><div class="score-value">${scores.spiritual}%</div></div>
+    <div class="score-item financial"><div class="score-icon">💰</div><div class="score-info"><div class="score-label">Financial Flow</div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0" data-target="${scores.financial}"></div></div></div><div class="score-value">${scores.financial}%</div></div>
+    <div class="score-item health"><div class="score-icon">🌿</div><div class="score-info"><div class="score-label">Health Vitality</div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0" data-target="${scores.health}"></div></div></div><div class="score-value">${scores.health}%</div></div>
+  </div></section>`;
+
+  // Duality
+  const dual=generateDuality(user);
+  html+=`<section class="card"><h2>Light & Shadow</h2><div class="duality-grid">
+    <div class="duality-side duality-light"><div class="duality-header">☀️ Light Side</div>${dual.light.map(i=>`<div class="duality-item">✦ ${i}</div>`).join('')}</div>
+    <div class="duality-side duality-shadow"><div class="duality-header">🌑 Shadow Side</div>${dual.shadow.map(i=>`<div class="duality-item">✧ ${i}</div>`).join('')}</div>
+  </div></section>`;
+
+  // Lines
+  html+=renderDashLines(user.lines);
+  html+=renderDashMounts(user.mounts);
+  html+=renderDashFingers(user.fingers);
+  html+=renderDashMarkings(user.specialMarkings);
+  html+=renderDashRecs(user.recommendations);
+  html+=renderDashLucky(user.recommendations?.luckyElements);
+
+  if(user.personalNotes)html+=`<section class="card"><h2>Sacred Notes</h2><div class="notes-content">${user.personalNotes}</div></section>`;
+
+  html+=`<section class="card"><div class="meta-info">Reading created: ${formatDate(user.createdDate)} · Last updated: ${formatDate(user.lastUpdated)}</div></section>`;
+
+  // Watermark
+  html+=`<div class="watermark"><div class="watermark-seal">र</div><div class="watermark-text">Karmarekha by Raj</div></div>`;
+
+  document.getElementById('dashboardContent').innerHTML=html;
+
+  // Animate score bars
+  setTimeout(()=>{document.querySelectorAll('.score-bar-fill').forEach(bar=>{bar.style.width=bar.dataset.target+'%';});},300);
+}
+
+function renderDashLines(lines){
+  if(!lines||!hasContent(lines))return'';
+  const c=[{k:'heart',l:'❤️ Heart Line'},{k:'head',l:'🧠 Head Line'},{k:'life',l:'🌿 Life Line'},{k:'fate',l:'🎯 Fate Line'},{k:'sun',l:'☀️ Sun Line'},{k:'mercury',l:'☿ Mercury Line'},{k:'marriage',l:'💍 Marriage Line'},{k:'girdle_of_venus',l:'🌙 Girdle of Venus'},{k:'rascettes',l:'⌚ Rascettes'}];
+  let b='';c.forEach(x=>{const ln=lines[x.k];if(!ln||!hasContent(ln))return;
+    b+=`<div class="data-block"><h3>${x.l}</h3>`;
+    ['quality','length','depth','branches','count','present'].forEach(f=>{if(ln[f])b+=`<div class="detail-row"><span class="key">${cap(f)}</span><span class="val">${ln[f]}</span></div>`;});
+    if(ln.description)b+=`<div class="description-text">${ln.description}</div>`;b+=`</div>`;});
+  return b?`<section class="card"><h2>Palm Lines</h2>${b}</section>`:'';
+}
+
+function renderDashMounts(mounts){
+  if(!mounts||!hasContent(mounts))return'';
+  const c=[{k:'jupiter',l:'♃ Jupiter'},{k:'saturn',l:'♄ Saturn'},{k:'apollo',l:'☉ Apollo'},{k:'mercury_mount',l:'☿ Mercury'},{k:'venus',l:'♀ Venus'},{k:'moon',l:'☽ Moon'},{k:'mars_positive',l:'♂ Mars +'},{k:'mars_negative',l:'♂ Mars −'},{k:'plain_of_mars',l:'⬜ Plain of Mars'}];
+  let b='';c.forEach(x=>{const m=mounts[x.k];if(!m||!hasContent(m))return;
+    b+=`<div class="data-block"><h3>${x.l}</h3>`;
+    if(m.development)b+=`<div class="detail-row"><span class="key">Development</span><span class="val">${m.development}</span></div>`;
+    if(m.description)b+=`<div class="description-text">${m.description}</div>`;b+=`</div>`;});
+  return b?`<section class="card"><h2>Mounts</h2>${b}</section>`:'';
+}
+
+function renderDashFingers(fingers){
+  if(!fingers||!hasContent(fingers))return'';
+  const c=[{k:'thumb',l:'👍 Thumb'},{k:'index',l:'☝️ Index'},{k:'middle',l:'🖐️ Middle'},{k:'ring',l:'💍 Ring'},{k:'little',l:'🤙 Little'}];
+  let b='';c.forEach(x=>{const f=fingers[x.k];if(!f||!hasContent(f))return;
+    b+=`<div class="data-block"><h3>${x.l}</h3>`;
+    ['length','tip_shape','flexibility','leaning','phalanges'].forEach(fd=>{if(f[fd])b+=`<div class="detail-row"><span class="key">${cap(fd.replace('_',' '))}</span><span class="val">${f[fd]}</span></div>`;});
+    if(f.description)b+=`<div class="description-text">${f.description}</div>`;b+=`</div>`;});
+  return b?`<section class="card"><h2>Finger Analysis</h2>${b}</section>`:'';
+}
+
+function renderDashMarkings(mk){
+  if(!mk)return'';
+  const t=[{k:'crosses',l:'✝️ Crosses'},{k:'stars',l:'⭐ Stars'},{k:'islands',l:'🏝️ Islands'},{k:'squares',l:'🔲 Squares'},{k:'triangles',l:'🔺 Triangles'},{k:'grilles',l:'# Grilles'},{k:'dots',l:'⚫ Dots'},{k:'tridents',l:'🔱 Tridents'}];
+  let b='';t.forEach(x=>{const items=mk[x.k];if(!items||!items.length)return;
+    b+=`<div class="data-block"><h3>${x.l}</h3>`;
+    items.forEach(i=>{b+=`<div class="description-text" style="margin:4px 0;border:none;padding:2px 0;">✦ ${i}</div>`;});b+=`</div>`;});
+  return b?`<section class="card"><h2>Sacred Markings</h2>${b}</section>`:'';
+}
+
+function renderDashRecs(r){
+  if(!r||!hasContent(r))return'';
+  const f=[{k:'strengths',l:'Strengths',c:'strengths'},{k:'weaknesses',l:'Growth Areas',c:''},{k:'career',l:'Career Path',c:'career'},{k:'relationships',l:'Relationships',c:'relationships'},{k:'health',l:'Health',c:'health'},{k:'spiritual',l:'Spiritual Path',c:'spiritual'},{k:'financialTendency',l:'Financial Flow',c:'financial'},{k:'warnings',l:'Cautions',c:'warnings'}];
+  let b='';f.forEach(x=>{if(!r[x.k])return;b+=`<div class="rec-block ${x.c}"><h3>${x.l}</h3><p>${r[x.k]}</p></div>`;});
+  return b?`<section class="card"><h2>Sacred Readings</h2>${b}</section>`:'';
+}
+
+function renderDashLucky(lk){
+  if(!lk||!hasContent(lk))return'';
+  let i='';
+  if(lk.color)i+=`<div class="lucky-item"><div class="icon">🎨</div><div class="lucky-label">Color</div><div class="lucky-value">${lk.color}</div></div>`;
+  if(lk.number)i+=`<div class="lucky-item"><div class="icon">🔢</div><div class="lucky-label">Number</div><div class="lucky-value">${lk.number}</div></div>`;
+  if(lk.day)i+=`<div class="lucky-item"><div class="icon">📅</div><div class="lucky-label">Day</div><div class="lucky-value">${lk.day}</div></div>`;
+  if(lk.gemstone)i+=`<div class="lucky-item"><div class="icon">💎</div><div class="lucky-label">Gemstone</div><div class="lucky-value">${lk.gemstone}</div></div>`;
+  return i?`<section class="card"><h2>Cosmic Alignments</h2><div class="lucky-grid">${i}</div></section>`:'';
+}
+
+// HELPERS
+function hasContent(o){if(!o)return false;return Object.values(o).some(v=>{if(typeof v==='string')return v.trim()!=='';if(Array.isArray(v))return v.length>0;if(typeof v==='object'&&v!==null)return hasContent(v);return!!v;});}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function formatDate(s){if(!s)return'—';try{return new Date(s).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});}catch{return s;}}
+
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginPage').classList.contains('active'))handleLogin();});
+</script>
+</body>
+</html>
