@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>कर्मरेखा — Karmarekha by Raj</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg-void:#010409;--bg-deep:#061020;--bg-card:rgba(8,20,42,0.65);--bg-glass:rgba(12,28,55,0.45);--bg-glass-heavy:rgba(8,20,42,0.75);--bg-input:rgba(10,25,50,0.6);--purple-mid:#5b2da8;--purple-light:#7c4dff;--purple-glow:rgba(124,77,255,0.25);--cyan:#4fc3f7;--cyan-deep:#0288d1;--cyan-glow:rgba(79,195,247,0.25);--cyan-glow-strong:rgba(79,195,247,0.45);--gold:#c9a84c;--gold-light:#e8d48b;--gold-muted:#8a7535;--gold-glow:rgba(201,168,76,0.2);--border:rgba(79,195,247,0.08);--border-light:rgba(79,195,247,0.15);--border-purple:rgba(124,77,255,0.15);--border-gold:rgba(201,168,76,0.15);--text-primary:#e0eaf5;--text-secondary:#7a9bb5;--text-muted:#3a5470;--success:#4caf50;--danger:#ef5350;--fire:#ff7043;--water:#42a5f5;--earth:#66bb6a;--air:#ab47bc;--pink:#ec407a;--glass-blur:16px;--glass-border:1px solid rgba(79,195,247,0.1);--nav-height:56px;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg-void);color:var(--text-primary);min-height:100vh;overflow-x:hidden;line-height:1.6;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',Georgia,serif;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg-void);}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple-mid),var(--cyan-deep));border-radius:10px;}
+::selection{background:var(--purple-mid);color:#fff;}
+
+.cosmic-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 15% 20%,rgba(124,77,255,0.07) 0%,transparent 55%),radial-gradient(ellipse at 85% 75%,rgba(79,195,247,0.05) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(10,24,48,0.8) 0%,transparent 70%);}
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:0.1;transform:scale(0.8)}50%{opacity:0.8;transform:scale(1.2)}}
+.particles-layer{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.particle{position:absolute;border-radius:50%;opacity:0;animation:particleFloat linear infinite;}
+.particle.cyan-p{background:var(--cyan);box-shadow:0 0 6px var(--cyan-glow-strong);}
+.particle.purple-p{background:var(--purple-light);box-shadow:0 0 6px var(--purple-glow);}
+.particle.gold-p{background:var(--gold);box-shadow:0 0 6px var(--gold-glow);}
+@keyframes particleFloat{0%{opacity:0;transform:translateY(100vh) scale(0)}5%{opacity:0.8}50%{opacity:0.3;transform:translateY(50vh) translateX(30px) scale(1)}100%{opacity:0;transform:translateY(-5vh) scale(0.5)}}
+
+.cosmic-seal{position:relative;width:120px;height:120px;margin:0 auto;display:flex;align-items:center;justify-content:center;}
+.cosmic-seal.small{width:38px;height:38px;}.cosmic-seal.tiny{width:28px;height:28px;}
+.seal-ring-outer{position:absolute;inset:0;border-radius:50%;border:1px solid transparent;border-top-color:var(--cyan);border-right-color:rgba(79,195,247,0.3);animation:sealRotate 12s linear infinite;}
+.seal-ring-mid{position:absolute;inset:8px;border-radius:50%;border:1px solid transparent;border-top-color:var(--purple-light);border-bottom-color:rgba(124,77,255,0.4);animation:sealRotateReverse 8s linear infinite;}
+.cosmic-seal.small .seal-ring-mid{inset:3px;}.cosmic-seal.tiny .seal-ring-mid{inset:2px;}
+.seal-ring-inner{position:absolute;inset:16px;border-radius:50%;border:1px solid rgba(79,195,247,0.15);box-shadow:inset 0 0 20px rgba(124,77,255,0.1);}
+.cosmic-seal.small .seal-ring-inner{inset:6px;}.cosmic-seal.tiny .seal-ring-inner{inset:4px;}
+.seal-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,rgba(124,77,255,0.15) 0%,rgba(79,195,247,0.08) 40%,transparent 70%);animation:sealPulse 4s ease-in-out infinite;}
+.cosmic-seal.small .seal-glow,.cosmic-seal.tiny .seal-glow{inset:-8px;}
+.seal-rays{position:absolute;inset:-30px;animation:sealRotate 30s linear infinite;}
+.cosmic-seal.small .seal-rays,.cosmic-seal.tiny .seal-rays{display:none;}
+.seal-ray{position:absolute;top:50%;left:50%;width:60px;height:1px;transform-origin:0 0;background:linear-gradient(90deg,rgba(79,195,247,0.4),transparent);animation:rayPulse 4s ease-in-out infinite;}
+.seal-char{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:42px;background:linear-gradient(135deg,var(--cyan),var(--purple-light),var(--cyan));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sealShimmer 6s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(79,195,247,0.4));}
+.cosmic-seal.small .seal-char{font-size:16px;}.cosmic-seal.tiny .seal-char{font-size:12px;}
+@keyframes sealRotate{to{transform:rotate(360deg)}}@keyframes sealRotateReverse{to{transform:rotate(-360deg)}}@keyframes sealPulse{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}@keyframes sealShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes rayPulse{0%,100%{opacity:0.3}50%{opacity:0.7}}
+
+.loading-overlay{position:fixed;inset:0;background:var(--bg-void);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9998;gap:28px;}
+.loading-text{font-family:'Cormorant Garamond',serif;font-size:16px;letter-spacing:8px;text-transform:uppercase;color:var(--text-secondary);animation:loadFade 2s ease-in-out infinite;}
+@keyframes loadFade{0%,100%{opacity:0.3}50%{opacity:1}}
+
+.page{display:none;position:relative;z-index:2;}.page.active{display:block;animation:pageIn 0.6s ease both;}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.toast{position:fixed;top:24px;right:24px;padding:16px 28px;border-radius:12px;font-size:14px;font-weight:600;z-index:9999;transform:translateX(calc(100% + 50px));transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);}
+.toast.show{transform:translateX(0)}.toast.success{background:rgba(76,175,80,0.9);color:#fff;}.toast.error{background:rgba(239,83,80,0.9);color:#fff;}
+
+.form-group{text-align:left;margin-bottom:22px;}.form-group label{display:block;font-size:11px;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:2px;font-weight:600;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 18px;background:var(--bg-input);backdrop-filter:blur(8px);border:1px solid var(--border-light);border-radius:12px;color:var(--text-primary);font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.3s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-glow);}
+.form-group textarea{resize:vertical;min-height:80px;}.form-group select{cursor:pointer;appearance:none;padding-right:40px;}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+
+.btn-primary{width:100%;padding:16px 28px;background:linear-gradient(135deg,var(--purple-mid),var(--cyan-deep));color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.3s;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:2px;text-transform:uppercase;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,77,255,0.3);}
+.btn-secondary{padding:12px 24px;background:transparent;border:1px solid var(--border-light);border-radius:10px;color:var(--text-secondary);cursor:pointer;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.3s;}
+.btn-secondary:hover{border-color:var(--cyan);color:var(--cyan);}
+.btn-danger{padding:10px 20px;background:transparent;border:1px solid rgba(239,83,80,0.3);border-radius:10px;color:var(--danger);cursor:pointer;font-size:13px;transition:all 0.3s;}
+.error-msg{margin-top:16px;padding:14px 18px;background:rgba(239,83,80,0.1);border:1px solid rgba(239,83,80,0.2);border-radius:12px;color:#ff8a80;font-size:13px;animation:shake 0.5s ease both;}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
+
+.login-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-card{background:var(--bg-glass-heavy);backdrop-filter:blur(var(--glass-blur));border:var(--glass-border);border-radius:24px;padding:56px 48px;width:100%;max-width:440px;text-align:center;position:relative;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.4),0 0 60px rgba(124,77,255,0.06);}
+.login-card::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--purple-light),var(--cyan),transparent);opacity:0.6;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;letter-spacing:6px;margin-top:20px;margin-bottom:2px;background:linear-gradient(135deg,var(--cyan),var(--purple-light),var(--gold-light));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:brandShimmer 8s ease-in-out infinite;}
+@keyframes brandShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.brand-by{font-size:11px;color:var(--text-muted);letter-spacing:5px;text-transform:uppercase;margin-bottom:8px;}
+.brand-tagline{color:var(--text-secondary);font-size:13px;font-style:italic;margin-bottom:36px;font-family:'Cormorant Garamond',serif;}
+.admin-link{margin-top:36px;padding-top:24px;border-top:1px solid var(--border);}.admin-link p{font-size:10px;color:var(--text-muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(6,16,32,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-height);}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;letter-spacing:3px;background:linear-gradient(135deg,var(--cyan),var(--purple-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-right{display:flex;align-items:center;gap:10px;}.nav-user{font-size:11px;color:var(--text-secondary);}
+.btn-logout{padding:5px 12px;background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--text-muted);cursor:pointer;font-size:10px;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.3s;}
+.btn-logout:hover{border-color:var(--danger);color:var(--danger);}
+.mode-badge{padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:rgba(124,77,255,0.15);color:var(--purple-light);border:1px solid rgba(124,77,255,0.25);}
+
+.tab-bar{position:fixed;bottom:0;left:0;right:0;height:62px;background:rgba(4,8,16,0.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:100;padding:0 4px;}
+.tab-bar-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;cursor:pointer;transition:all 0.3s;border-radius:10px;min-width:50px;position:relative;}
+.tab-bar-item .tab-icon{font-size:18px;transition:transform 0.3s;}.tab-bar-item .tab-label{font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);transition:color 0.3s;}
+.tab-bar-item.active .tab-icon{transform:scale(1.2);}.tab-bar-item.active .tab-label{color:var(--cyan);}
+.tab-bar-item.active::before{content:'';position:absolute;top:-1px;left:15%;right:15%;height:2px;background:var(--cyan);border-radius:0 0 2px 2px;box-shadow:0 0 8px var(--cyan-glow);}
+
+.greeting-overlay{position:fixed;inset:0;background:var(--bg-void);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;text-align:center;padding:40px;}
+.greeting-brand-line{font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--text-muted);margin-top:24px;margin-bottom:8px;}
+.greeting-divider{width:80px;height:1px;margin:0 auto 36px;background:linear-gradient(90deg,transparent,var(--cyan),var(--purple-light),var(--cyan),transparent);opacity:0.6;}
+.greeting-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--text-secondary);line-height:2.2;max-width:520px;font-style:italic;animation:greetReveal 2s ease both 0.5s;white-space:pre-line;}
+@keyframes greetReveal{from{opacity:0;transform:translateY(15px);filter:blur(4px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.greeting-name{color:var(--cyan);font-weight:600;font-style:normal;}
+.greeting-enter{margin-top:44px;padding:14px 44px;background:transparent;border:1px solid rgba(79,195,247,0.3);border-radius:30px;color:var(--cyan);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;transition:all 0.4s;animation:greetBtn 1s ease both 2s;}
+@keyframes greetBtn{from{opacity:0}to{opacity:1}}
+.greeting-enter:hover{background:rgba(79,195,247,0.08);border-color:var(--cyan);box-shadow:0 0 30px var(--cyan-glow);}
+
+.dash-body{padding-top:calc(var(--nav-height) + 12px);padding-bottom:78px;max-width:860px;margin:0 auto;padding-left:16px;padding-right:16px;}
+.dash-screen{display:none;animation:screenIn 0.5s ease both;}.dash-screen.active{display:block;}
+@keyframes screenIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.card{background:var(--bg-glass-heavy);backdrop-filter:blur(var(--glass-blur));border:var(--glass-border);border-radius:16px;padding:24px;margin-bottom:18px;position:relative;overflow:hidden;animation:cardIn 0.6s ease both;transition:border-color 0.4s;}
+.card:hover{border-color:rgba(79,195,247,0.15);}
+.card::before{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(79,195,247,0.2),transparent);opacity:0;transition:opacity 0.4s;}
+.card:hover::before{opacity:1;}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.card h2{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:var(--text-primary);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);letter-spacing:2px;}
+.accent{color:var(--cyan);}
+
+/* FLIP CARDS for Light & Shadow */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+.flip-card{perspective:800px;height:160px;cursor:pointer;}
+.flip-card-inner{position:relative;width:100%;height:100%;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);transform-style:preserve-3d;}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:14px;padding:20px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;-webkit-backface-visibility:hidden;backface-visibility:hidden;font-size:13px;line-height:1.5;}
+.flip-front{background:rgba(79,195,247,0.06);border:1px solid rgba(79,195,247,0.15);color:var(--cyan);}
+.flip-front .flip-icon{font-size:24px;margin-bottom:8px;}
+.flip-front .flip-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
+.flip-front .flip-trait{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;}
+.flip-back{background:rgba(124,77,255,0.08);border:1px solid rgba(124,77,255,0.2);color:var(--purple-light);transform:rotateY(180deg);}
+.flip-back .flip-icon{font-size:24px;margin-bottom:8px;}
+.flip-back .flip-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
+.flip-back .flip-trait{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;}
+.flip-hint{text-align:center;font-size:10px;color:var(--text-muted);margin-top:12px;letter-spacing:1px;}
+
+/* INTERACTIVE TIMELINE */
+.itl-container{position:relative;padding:16px 0;}
+.itl-age-marker{text-align:center;margin-bottom:16px;font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--cyan);letter-spacing:2px;}
+.itl-age-marker span{background:rgba(79,195,247,0.1);padding:4px 16px;border-radius:20px;border:1px solid rgba(79,195,247,0.2);}
+.itl-list{display:flex;flex-direction:column;gap:0;}
+.itl-node{display:flex;gap:16px;padding:14px 0;cursor:pointer;transition:all 0.3s;border-radius:12px;position:relative;}
+.itl-node:hover{background:rgba(79,195,247,0.03);}
+.itl-node.current{background:rgba(79,195,247,0.06);}
+.itl-node.past{opacity:0.5;}
+.itl-node.past:hover{opacity:0.8;}
+.itl-dot-col{display:flex;flex-direction:column;align-items:center;min-width:40px;position:relative;}
+.itl-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all 0.3s;position:relative;z-index:2;}
+.itl-dot.glow{box-shadow:0 0 12px currentColor,0 0 24px rgba(79,195,247,0.15);}
+.itl-line-seg{width:2px;flex:1;min-height:20px;background:linear-gradient(180deg,var(--purple-mid),var(--cyan));opacity:0.3;}
+.itl-info{flex:1;padding:2px 0;}
+.itl-info-age{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;display:inline;}
+.itl-info-cat{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);background:rgba(255,255,255,0.04);padding:2px 8px;border-radius:8px;display:inline-block;margin-left:10px;}
+.itl-info-desc{color:var(--text-secondary);font-size:13px;line-height:1.7;margin-top:6px;max-height:0;overflow:hidden;transition:max-height 0.5s ease,opacity 0.3s;opacity:0;}
+.itl-node.expanded .itl-info-desc{max-height:200px;opacity:1;}
+.itl-info-countdown{font-size:10px;color:var(--gold);margin-top:6px;letter-spacing:1px;max-height:0;overflow:hidden;transition:max-height 0.5s ease;opacity:0;}
+.itl-node.expanded .itl-info-countdown{max-height:30px;opacity:1;}
+.itl-next-event{text-align:center;padding:16px;background:rgba(201,168,76,0.06);border:1px solid var(--border-gold);border-radius:12px;margin-top:12px;}
+.itl-next-event .itl-next-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-muted);margin-bottom:4px;}
+.itl-next-event .itl-next-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold);}
+
+/* EXPANDABLE SCORE */
+.exp-score{margin-bottom:14px;border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:border-color 0.3s;}
+.exp-score:hover{border-color:var(--border-light);}
+.exp-score-header{display:flex;align-items:center;gap:14px;padding:16px 20px;background:rgba(10,25,50,0.4);cursor:pointer;transition:background 0.3s;}
+.exp-score-header:hover{background:rgba(10,25,50,0.6);}
+.exp-score-icon{font-size:22px;min-width:32px;text-align:center;}
+.exp-score-info{flex:1;}
+.exp-score-label{font-size:10px;color:var(--text-secondary);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;font-weight:600;}
+.exp-score-bar-bg{width:100%;height:5px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;}
+.exp-score-bar-fill{height:100%;border-radius:3px;transition:width 2s cubic-bezier(0.16,1,0.3,1);width:0;}
+.exp-score-val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;min-width:44px;text-align:right;}
+.exp-score-arrow{font-size:12px;color:var(--text-muted);transition:transform 0.3s;min-width:20px;text-align:center;}
+.exp-score.open .exp-score-arrow{transform:rotate(180deg);}
+.exp-score-detail{max-height:0;overflow:hidden;transition:max-height 0.5s ease;background:rgba(10,25,50,0.3);}
+.exp-score.open .exp-score-detail{max-height:400px;}
+.exp-score-detail-inner{padding:16px 20px;}
+.exp-factor{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.exp-factor:last-child{border-bottom:none;}
+.exp-factor .ef-name{color:var(--text-muted);}.exp-factor .ef-val{font-weight:600;}
+.ef-pos{color:var(--success);}.ef-neg{color:var(--danger);}
+.exp-score.career .exp-score-bar-fill{background:linear-gradient(90deg,var(--purple-mid),var(--cyan));}
+.exp-score.love .exp-score-bar-fill{background:linear-gradient(90deg,var(--pink),#f48fb1);}
+.exp-score.spiritual .exp-score-bar-fill{background:linear-gradient(90deg,var(--air),#ce93d8);}
+.exp-score.financial .exp-score-bar-fill{background:linear-gradient(90deg,var(--gold-muted),var(--gold));}
+.exp-score.health .exp-score-bar-fill{background:linear-gradient(90deg,var(--earth),#a5d6a7);}
+
+/* HERO SCORE */
+.hero-score{text-align:center;padding:28px 20px;background:var(--bg-glass-heavy);backdrop-filter:blur(16px);border:var(--glass-border);border-radius:18px;margin-bottom:18px;}
+.hero-score-value{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:700;line-height:1;}
+.hero-score-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-top:6px;}
+.hero-score.career .hero-score-value{background:linear-gradient(135deg,var(--cyan),var(--purple-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-score.love .hero-score-value{color:var(--pink);}
+.hero-score.money .hero-score-value{color:var(--gold);}
+
+/* DETAIL CARD */
+.detail-card{padding:20px;background:rgba(10,25,50,0.3);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;transition:all 0.3s;}
+.detail-card:hover{border-color:var(--border-light);}
+.detail-card h3{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;color:var(--cyan);margin-bottom:8px;letter-spacing:1px;}
+.detail-card p{color:var(--text-secondary);font-size:13px;line-height:1.9;white-space:pre-line;}
+.detail-card.warning{border-left:3px solid var(--danger);}.detail-card.warning h3{color:var(--danger);}
+.detail-card.gold-border{border-left:3px solid var(--gold);}.detail-card.gold-border h3{color:var(--gold);}
+.detail-card.love-border{border-left:3px solid var(--pink);}.detail-card.love-border h3{color:var(--pink);}
+.detail-card.career-border{border-left:3px solid var(--cyan);}.detail-card.career-border h3{color:var(--cyan);}
+
+/* ELEMENT CARD */
+.element-card{border-radius:18px;padding:32px 24px;text-align:center;margin-bottom:18px;backdrop-filter:blur(12px);position:relative;overflow:hidden;}
+.element-card.fire{background:linear-gradient(135deg,rgba(255,112,67,0.08),rgba(20,10,5,0.7),rgba(255,112,67,0.04));border:1px solid rgba(255,112,67,0.15);}
+.element-card.water{background:linear-gradient(135deg,rgba(66,165,245,0.08),rgba(5,15,30,0.7),rgba(66,165,245,0.04));border:1px solid rgba(66,165,245,0.15);}
+.element-card.earth{background:linear-gradient(135deg,rgba(102,187,106,0.08),rgba(10,20,10,0.7),rgba(102,187,106,0.04));border:1px solid rgba(102,187,106,0.15);}
+.element-card.air{background:linear-gradient(135deg,rgba(171,71,188,0.08),rgba(15,5,20,0.7),rgba(171,71,188,0.04));border:1px solid rgba(171,71,188,0.15);}
+.element-icon{font-size:44px;margin-bottom:10px;}.element-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:5px;margin-bottom:4px;}
+.element-card.fire .element-title{color:var(--fire);}.element-card.water .element-title{color:var(--water);}.element-card.earth .element-title{color:var(--earth);}.element-card.air .element-title{color:var(--air);}
+.element-sub{font-size:10px;color:var(--text-muted);letter-spacing:2px;margin-bottom:18px;text-transform:uppercase;}
+.element-traits{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;}
+.element-trait{padding:4px 12px;border-radius:16px;font-size:11px;font-weight:500;}
+.element-card.fire .element-trait{background:rgba(255,112,67,0.12);color:var(--fire);border:1px solid rgba(255,112,67,0.15);}
+.element-card.water .element-trait{background:rgba(66,165,245,0.12);color:var(--water);border:1px solid rgba(66,165,245,0.15);}
+.element-card.earth .element-trait{background:rgba(102,187,106,0.12);color:var(--earth);border:1px solid rgba(102,187,106,0.15);}
+.element-card.air .element-trait{background:rgba(171,71,188,0.12);color:var(--air);border:1px solid rgba(171,71,188,0.15);}
+.element-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--text-secondary);line-height:1.8;max-width:380px;margin:0 auto;}
+
+/* LUCKY */
+.lucky-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;}
+.lucky-item{text-align:center;padding:20px 14px;background:rgba(10,25,50,0.4);border-radius:12px;border:1px solid var(--border);transition:all 0.4s;}
+.lucky-item:hover{border-color:var(--gold);transform:translateY(-2px);}
+.lucky-item .icon{font-size:24px;margin-bottom:6px;}.lucky-item .lucky-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);font-weight:600;}
+.lucky-item .lucky-value{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold);font-weight:600;margin-top:3px;}
+
+/* PROFILE */
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+.profile-item{padding:12px;background:rgba(10,25,50,0.3);border-radius:10px;border:1px solid var(--border);border-left:3px solid var(--cyan);}
+.profile-item .label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:3px;font-weight:600;}
+.profile-item .value{font-size:14px;color:var(--text-primary);font-weight:500;}
+
+/* ASK */
+.ask-input-area{position:relative;margin-bottom:20px;}
+.ask-input{width:100%;padding:16px 56px 16px 18px;background:var(--bg-input);border:1px solid var(--border-light);border-radius:14px;color:var(--text-primary);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.3s;}
+.ask-input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-glow);}
+.ask-submit{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--purple-mid),var(--cyan-deep));border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.ask-submit:hover{transform:translateY(-50%) scale(1.08);}
+.suggested-q{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.suggested-q-btn{padding:7px 14px;background:rgba(10,25,50,0.4);border:1px solid var(--border);border-radius:18px;color:var(--text-secondary);cursor:pointer;font-size:11px;transition:all 0.3s;font-family:'Plus Jakarta Sans',sans-serif;}
+.suggested-q-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.answer-card{background:rgba(10,25,50,0.4);backdrop-filter:blur(8px);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:14px;padding:20px;margin-bottom:12px;animation:cardIn 0.5s ease both;}
+.answer-card .q-text{font-size:13px;color:var(--text-primary);font-weight:600;margin-bottom:10px;}
+.answer-card .a-text{font-size:13px;color:var(--text-secondary);line-height:1.8;white-space:pre-line;}
+.answer-card .a-source{font-size:9px;color:var(--text-muted);margin-top:8px;letter-spacing:1px;}
+
+/* MARKING SPOTLIGHT */
+.marking-spotlight{background:linear-gradient(135deg,rgba(201,168,76,0.06),rgba(10,20,40,0.7),rgba(201,168,76,0.03));border:1px solid var(--border-gold);border-radius:14px;padding:22px;margin-bottom:12px;text-align:center;animation:spotPulse 4s ease-in-out infinite;}
+@keyframes spotPulse{0%,100%{box-shadow:0 0 20px rgba(201,168,76,0.05)}50%{box-shadow:0 0 40px rgba(201,168,76,0.1)}}
+
+/* RAW DATA TOGGLE */
+.raw-toggle{text-align:center;padding:14px;cursor:pointer;color:var(--text-muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--border);border-radius:12px;margin-bottom:18px;transition:all 0.3s;}
+.raw-toggle:hover{border-color:var(--border-light);color:var(--text-secondary);}
+.raw-data-container{display:none;animation:cardIn 0.5s ease both;}.raw-data-container.visible{display:block;}
+
+.watermark{text-align:center;padding:36px 20px;margin-top:14px;}
+.watermark-text{font-size:9px;color:var(--text-muted);letter-spacing:5px;text-transform:uppercase;margin-top:8px;opacity:0.5;}
+.no-data{text-align:center;padding:28px;color:var(--text-muted);font-style:italic;font-size:13px;}
+.meta-info{text-align:center;color:var(--text-muted);font-size:10px;letter-spacing:1px;}
+
+/* ADMIN */
+.friend-item{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:rgba(10,25,50,0.3);border-radius:12px;cursor:pointer;border:1px solid var(--border);margin-bottom:8px;transition:all 0.3s;}
+.friend-item:hover{border-color:var(--cyan);}.friend-item.active{border-color:var(--cyan);background:rgba(79,195,247,0.05);}
+.friend-name{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:15px;letter-spacing:1px;}.friend-meta{font-size:10px;color:var(--text-muted);margin-top:2px;}
+.friend-actions{display:flex;gap:6px;}
+.admin-tab-nav{display:flex;gap:4px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none;}.admin-tab-nav::-webkit-scrollbar{display:none;}
+.admin-tab-btn{padding:8px 16px;background:rgba(10,25,50,0.4);border:1px solid var(--border);border-radius:8px;color:var(--text-secondary);cursor:pointer;font-size:10px;font-weight:600;white-space:nowrap;transition:all 0.3s;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+.admin-tab-btn.active{background:linear-gradient(135deg,var(--purple-mid),var(--cyan-deep));color:#fff;border-color:transparent;}
+.admin-tab-content{display:none;}.admin-tab-content.active{display:block;}
+.editor-block{background:rgba(10,25,50,0.3);padding:20px;border-radius:12px;margin-bottom:12px;border:1px solid var(--border);border-left:3px solid var(--purple-mid);transition:border-left-color 0.3s;}
+.editor-block:hover{border-left-color:var(--cyan);}
+.editor-block h3{font-family:'Cormorant Garamond',serif;color:var(--purple-light);font-size:14px;font-weight:500;margin-bottom:12px;letter-spacing:1px;}
+.bulk-import-section{background:linear-gradient(135deg,rgba(124,77,255,0.05),rgba(10,20,42,0.7),rgba(79,195,247,0.03));border:1px solid var(--border-purple);border-radius:16px;padding:24px;margin-bottom:18px;}
+.bulk-import-section h3{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--purple-light);margin-bottom:4px;letter-spacing:2px;}
+.bulk-import-section .bulk-hint{font-size:11px;color:var(--text-muted);margin-bottom:12px;line-height:1.7;}
+.bulk-import-section textarea{min-height:160px;font-size:12px;line-height:1.7;}
+
+@media(max-width:640px){.login-card{padding:40px 24px;margin:16px;}.card{padding:20px;}.form-row{grid-template-columns:1fr;}.profile-grid{grid-template-columns:1fr 1fr;}.lucky-grid{grid-template-columns:repeat(2,1fr);}.nav-user{display:none;}.brand-name{font-size:24px;letter-spacing:4px;}.cosmic-seal{width:90px;height:90px;}.seal-char{font-size:32px;}.hero-score-value{font-size:52px;}.tab-bar-item{min-width:44px;padding:6px 6px;}.flip-grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="cosmic-bg"></div><div class="stars" id="starsLayer"></div><div class="particles-layer" id="particlesLayer"></div>
+<div class="loading-overlay" id="loadingOverlay"><div class="cosmic-seal"><div class="seal-glow"></div><div class="seal-rays" id="loadingSealRays"></div><div class="seal-ring-outer"></div><div class="seal-ring-mid"></div><div class="seal-ring-inner"></div><span class="seal-char">र</span></div><div class="loading-text">KARMAREKHA</div></div>
+<div class="greeting-overlay" id="greetingOverlay" style="display:none"><div class="cosmic-seal"><div class="seal-glow"></div><div class="seal-rays" id="greetingSealRays"></div><div class="seal-ring-outer"></div><div class="seal-ring-mid"></div><div class="seal-ring-inner"></div><span class="seal-char">र</span></div><div class="greeting-brand-line">✦ KARMAREKHA ✦</div><div class="greeting-divider"></div><div class="greeting-text" id="greetingText"></div><button class="greeting-enter" onclick="enterDashboard()">Enter My Reading →</button></div>
+<div id="loginPage" class="page"><div class="login-container"><div class="login-card"><div class="cosmic-seal"><div class="seal-glow"></div><div class="seal-rays" id="loginSealRays"></div><div class="seal-ring-outer"></div><div class="seal-ring-mid"></div><div class="seal-ring-inner"></div><span class="seal-char">र</span></div><div class="brand-name">KARMAREKHA</div><div class="brand-by">by Raj</div><p class="brand-tagline">The lines of your destiny await</p><div class="form-group"><label>Your Name</label><input type="text" id="loginName" placeholder="Enter your name"></div><div class="form-group"><label>Date of Birth</label><input type="date" id="loginDob"></div><button class="btn-primary" onclick="handleLogin()">Unlock Reading</button><div id="loginError" style="display:none" class="error-msg"></div><div class="admin-link"><p>Sacred Access</p><button class="btn-secondary" onclick="showPage('adminPage')">🔑 Admin Panel</button></div></div></div></div>
+<div id="dashboardPage" class="page"><nav class="top-nav"><div class="nav-brand"><div class="cosmic-seal tiny"><div class="seal-ring-outer"></div><div class="seal-ring-mid"></div><div class="seal-ring-inner"></div><span class="seal-char">र</span></div><span class="nav-logo">KARMAREKHA</span></div><div class="nav-right"><span id="navUserName" class="nav-user"></span><button class="btn-logout" onclick="logout()">Logout</button></div></nav><div class="dash-body"><div id="screenHome" class="dash-screen active"></div><div id="screenCareer" class="dash-screen"></div><div id="screenLove" class="dash-screen"></div><div id="screenMoney" class="dash-screen"></div><div id="screenFuture" class="dash-screen"></div><div id="screenAsk" class="dash-screen"></div></div><div class="tab-bar"><div class="tab-bar-item active" onclick="switchDashTab('Home')"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></div><div class="tab-bar-item" onclick="switchDashTab('Career')"><span class="tab-icon">💼</span><span class="tab-label">Career</span></div><div class="tab-bar-item" onclick="switchDashTab('Love')"><span class="tab-icon">💕</span><span class="tab-label">Love</span></div><div class="tab-bar-item" onclick="switchDashTab('Money')"><span class="tab-icon">💰</span><span class="tab-label">Money</span></div><div class="tab-bar-item" onclick="switchDashTab('Future')"><span class="tab-icon">🔮</span><span class="tab-label">Future</span></div><div class="tab-bar-item" onclick="switchDashTab('Ask')"><span class="tab-icon">❓</span><span class="tab-label">Ask</span></div></div></div>
+<div id="adminPage" class="page"><nav class="top-nav"><div class="nav-brand"><div class="cosmic-seal tiny"><div class="seal-ring-outer"></div><div class="seal-ring-mid"></div><div class="seal-ring-inner"></div><span class="seal-char">र</span></div><span class="nav-logo">KARMAREKHA</span></div><div class="nav-right"><span class="mode-badge">Admin</span><button class="btn-logout" onclick="logout()">← Back</button></div></nav><div class="dash-body" style="padding-top:calc(var(--nav-height) + 16px)"><div id="adminLoginSection"><div class="card" style="max-width:440px;margin:40px auto"><h2>Sacred Access</h2><div class="form-group"><label>Admin Password</label><input type="password" id="adminPasswordInput" placeholder="Enter sacred password"></div><button class="btn-primary" onclick="adminAuthenticate()">Enter</button><div id="adminLoginError" style="display:none" class="error-msg"></div></div></div><div id="adminContent" style="display:none"><div class="card"><h2>Add New Soul</h2><div class="form-row"><div class="form-group"><label>Name *</label><input type="text" id="newName" placeholder="Friend's name"></div><div class="form-group"><label>Date of Birth *</label><input type="date" id="newDob"></div></div><div class="form-row"><div class="form-group"><label>Gender</label><select id="newGender"><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div><div class="form-group"><label>Dominant Hand</label><select id="newHand"><option value="Right">Right</option><option value="Left">Left</option><option value="Ambidextrous">Ambidextrous</option></select></div></div><button class="btn-primary" onclick="addFriend()">✦ Add Soul</button></div><div class="card"><h2>Souls (<span id="friendCount">0</span>)</h2><div id="friendsList"></div></div><div id="editSection" style="display:none"><div class="card"><h2>Editing: <span id="editingFriendName"></span></h2><div class="bulk-import-section"><h3>⚡ Quick Import</h3><p class="bulk-hint">Paste formatted reading. Auto-fills everything.</p><div class="form-group"><textarea id="bulkImportText" rows="8" placeholder="Paste formatted reading..."></textarea></div><button class="btn-primary" onclick="processBulkImport()">⚡ Import</button></div><div class="admin-tab-nav"><button class="admin-tab-btn active" onclick="switchAdminTab(this,'atLines')">Lines</button><button class="admin-tab-btn" onclick="switchAdminTab(this,'atMounts')">Mounts</button><button class="admin-tab-btn" onclick="switchAdminTab(this,'atFingers')">Fingers</button><button class="admin-tab-btn" onclick="switchAdminTab(this,'atMarkings')">Markings</button><button class="admin-tab-btn" onclick="switchAdminTab(this,'atRecs')">Readings</button><button class="admin-tab-btn" onclick="switchAdminTab(this,'atNotes')">Notes</button></div><div id="atLines" class="admin-tab-content active"><div id="linesEditorContent"></div><button class="btn-primary" onclick="saveSection('lines')" style="margin-top:12px">Save</button></div><div id="atMounts" class="admin-tab-content"><div id="mountsEditorContent"></div><button class="btn-primary" onclick="saveSection('mounts')" style="margin-top:12px">Save</button></div><div id="atFingers" class="admin-tab-content"><div id="fingersEditorContent"></div><button class="btn-primary" onclick="saveSection('fingers')" style="margin-top:12px">Save</button></div><div id="atMarkings" class="admin-tab-content"><div id="markingsEditorContent"></div><button class="btn-primary" onclick="saveSection('markings')" style="margin-top:12px">Save</button></div><div id="atRecs" class="admin-tab-content"><div id="recsEditorContent"></div><button class="btn-primary" onclick="saveSection('recommendations')" style="margin-top:12px">Save</button></div><div id="atNotes" class="admin-tab-content"><div class="form-group"><label>Hand Shape</label><select id="editHandShape"><option value="">Select</option><option value="Earth">Earth</option><option value="Air">Air</option><option value="Water">Water</option><option value="Fire">Fire</option><option value="Mixed">Mixed</option></select></div><div class="form-group"><label>Personal Notes</label><textarea id="editPersonalNotes" rows="8" placeholder="Notes..."></textarea></div><button class="btn-primary" onclick="saveSection('notes')">Save</button></div></div></div></div></div></div><script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import{getFirestore,collection,doc,setDoc,getDoc,getDocs,updateDoc,deleteDoc}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCMWF1hMCm2D9N-qzydx33Jdcm-KyxTzaA",authDomain:"palmistry-vault.firebaseapp.com",projectId:"palmistry-vault",storageBucket:"palmistry-vault.firebasestorage.app",messagingSenderId:"731739632047",appId:"1:731739632047:web:2d508e40809629889f3f5a"});
+const db=getFirestore(app);const ADMIN_PASSWORD='mypalm2024';
+
+// COSMIC INIT
+(function(){const starsEl=document.getElementById('starsLayer');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';const sz=0.5+Math.random()*2;s.style.width=sz+'px';s.style.height=sz+'px';s.style.animationDuration=(2+Math.random()*5)+'s';s.style.animationDelay=Math.random()*5+'s';starsEl.appendChild(s);}const partEl=document.getElementById('particlesLayer');const pT=['cyan-p','purple-p','gold-p'];for(let i=0;i<35;i++){const p=document.createElement('div');p.className='particle '+pT[Math.floor(Math.random()*pT.length)];p.style.left=Math.random()*100+'%';p.style.animationDuration=(12+Math.random()*25)+'s';p.style.animationDelay=Math.random()*20+'s';const sz=1+Math.random()*3;p.style.width=sz+'px';p.style.height=sz+'px';partEl.appendChild(p);}['loadingSealRays','loginSealRays','greetingSealRays'].forEach(id=>{const el=document.getElementById(id);if(!el)return;for(let i=0;i<12;i++){const r=document.createElement('div');r.className='seal-ray';r.style.transform=`rotate(${i*30}deg)`;r.style.animationDelay=(i*0.3)+'s';el.appendChild(r);}});})();
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loadingOverlay').style.display='none';showPage('loginPage');},2200);});
+
+// UTILS
+function showToast(m,t='success'){const o=document.querySelector('.toast');if(o)o.remove();const d=document.createElement('div');d.className=`toast ${t}`;d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.classList.add('show'),20);setTimeout(()=>{d.classList.remove('show');setTimeout(()=>d.remove(),500);},4000);}
+function showLoading(t='Loading...'){const o=document.getElementById('loadingOverlay');o.querySelector('.loading-text').textContent=t;o.style.display='flex';}
+function hideLoading(){document.getElementById('loadingOverlay').style.display='none';}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+window.showPage=showPage;
+function cap(s){if(!s)return'';return s.charAt(0).toUpperCase()+s.slice(1);}
+function fmtDate(s){if(!s)return'—';try{return new Date(s).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});}catch{return s;}}
+function hasContent(o){if(!o)return false;return Object.values(o).some(v=>{if(typeof v==='string')return v.trim()!=='';if(Array.isArray(v))return v.length>0;if(typeof v==='object'&&v!==null)return hasContent(v);return!!v;});}
+function calcAge(dob){if(!dob)return 0;const b=new Date(dob);const now=new Date();let age=now.getFullYear()-b.getFullYear();if(now.getMonth()<b.getMonth()||(now.getMonth()===b.getMonth()&&now.getDate()<b.getDate()))age--;return age;}
+
+let currentUser=null;let currentEditId=null;let askHistory=[];
+
+window.logout=function(){currentUser=null;currentEditId=null;askHistory=[];document.getElementById('loginName').value='';document.getElementById('loginDob').value='';document.getElementById('adminPasswordInput').value='';document.getElementById('adminLoginSection').style.display='block';document.getElementById('adminContent').style.display='none';document.getElementById('greetingOverlay').style.display='none';showPage('loginPage');};
+
+window.handleLogin=async function(){const name=document.getElementById('loginName').value.trim();const dob=document.getElementById('loginDob').value;const err=document.getElementById('loginError');err.style.display='none';if(!name||!dob){err.textContent='Enter both name and date of birth.';err.style.display='block';return;}showLoading('Consulting the cosmos...');try{const users=await getAllUsers();let found=null;users.forEach(u=>{if(u.name.toLowerCase()===name.toLowerCase()&&u.dob===dob)found=u;});hideLoading();if(!found){err.textContent='Name or date of birth incorrect.';err.style.display='block';return;}currentUser=found;askHistory=[];document.getElementById('greetingText').innerHTML=generateGreeting(found);document.getElementById('greetingOverlay').style.display='flex';}catch(e){hideLoading();err.textContent='Connection error.';err.style.display='block';}};
+
+window.enterDashboard=function(){document.getElementById('greetingOverlay').style.display='none';renderAllScreens(currentUser);showPage('dashboardPage');setTimeout(()=>{document.querySelectorAll('.exp-score-bar-fill').forEach(b=>{b.style.width=b.dataset.target+'%';});},500);};
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginPage').classList.contains('active'))handleLogin();});
+
+window.switchDashTab=function(name){document.querySelectorAll('.dash-screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen'+name).classList.add('active');document.querySelectorAll('.tab-bar-item').forEach(t=>t.classList.remove('active'));event.currentTarget.classList.add('active');window.scrollTo(0,0);setTimeout(()=>{document.querySelectorAll('.exp-score-bar-fill').forEach(b=>{if(b.dataset.target)b.style.width=b.dataset.target+'%';});},300);};
+
+// FIRESTORE
+async function getAllUsers(){const s=await getDocs(collection(db,'users'));return s.docs.map(d=>({id:d.id,...d.data()}));}
+async function getUserById(id){const s=await getDoc(doc(db,'users',id));if(!s.exists())return null;return{id:s.id,...s.data()};}
+function createEmptyUser(name,dob,gender,hand){return{name:name.trim(),dob,gender:gender||'',dominantHand:hand||'Right',handShape:'',lines:{heart:{description:'',quality:'',length:'',depth:'',branches:''},head:{description:'',quality:'',length:'',depth:'',branches:''},life:{description:'',quality:'',length:'',depth:'',branches:''},fate:{description:'',quality:'',length:'',depth:'',branches:''},sun:{description:'',quality:'',length:'',depth:'',branches:''},mercury:{description:'',quality:'',length:'',depth:'',branches:''},marriage:{description:'',count:'',quality:''},girdle_of_venus:{description:'',present:''},rascettes:{description:'',count:''}},mounts:{jupiter:{development:'',description:''},saturn:{development:'',description:''},apollo:{development:'',description:''},mercury_mount:{development:'',description:''},venus:{development:'',description:''},moon:{development:'',description:''},mars_positive:{development:'',description:''},mars_negative:{development:'',description:''},plain_of_mars:{development:'',description:''}},fingers:{thumb:{length:'',flexibility:'',phalanges:'',tip_shape:'',description:''},index:{length:'',leaning:'',tip_shape:'',description:''},middle:{length:'',leaning:'',tip_shape:'',description:''},ring:{length:'',leaning:'',tip_shape:'',description:''},little:{length:'',leaning:'',tip_shape:'',description:''}},specialMarkings:{crosses:[],stars:[],islands:[],squares:[],triangles:[],grilles:[],dots:[],tridents:[]},recommendations:{career:'',relationships:'',health:'',spiritual:'',financialTendency:'',strengths:'',weaknesses:'',warnings:'',luckyElements:{color:'',number:'',day:'',gemstone:''}},personalNotes:'',timelineEvents:[],createdDate:new Date().toISOString(),lastUpdated:new Date().toISOString()};}
+
+// ADMIN
+window.adminAuthenticate=function(){const p=document.getElementById('adminPasswordInput').value;const e=document.getElementById('adminLoginError');if(p!==ADMIN_PASSWORD){e.textContent='Wrong password.';e.style.display='block';return;}e.style.display='none';document.getElementById('adminLoginSection').style.display='none';document.getElementById('adminContent').style.display='block';loadFriendsList();};
+window.addFriend=async function(){const name=document.getElementById('newName').value.trim();const dob=document.getElementById('newDob').value;const gender=document.getElementById('newGender').value;const hand=document.getElementById('newHand').value;if(!name||!dob){showToast('Name and DOB required!','error');return;}showLoading('Adding...');try{const users=await getAllUsers();if(users.find(u=>u.name.toLowerCase()===name.toLowerCase())){hideLoading();showToast('Exists!','error');return;}await setDoc(doc(collection(db,'users')),createEmptyUser(name,dob,gender,hand));document.getElementById('newName').value='';document.getElementById('newDob').value='';document.getElementById('newGender').value='';document.getElementById('newHand').value='Right';hideLoading();showToast(`${name} added ✦`);loadFriendsList();}catch(e){hideLoading();showToast('Error.','error');}};
+async function loadFriendsList(){showLoading('Loading...');try{const users=await getAllUsers();hideLoading();document.getElementById('friendCount').textContent=users.length;const c=document.getElementById('friendsList');if(!users.length){c.innerHTML='<div class="no-data">No souls yet.</div>';return;}c.innerHTML=users.map(u=>`<div class="friend-item ${currentEditId===u.id?'active':''}" onclick="selectFriend('${u.id}')"><div><div class="friend-name">${u.name}</div><div class="friend-meta">${fmtDate(u.dob)} · ${u.gender||'—'} · ${u.dominantHand}</div></div><div class="friend-actions"><button class="btn-secondary" onclick="event.stopPropagation();selectFriend('${u.id}')">✏️</button><button class="btn-danger" onclick="event.stopPropagation();deleteFriend('${u.id}','${u.name}')">🗑️</button></div></div>`).join('');}catch(e){hideLoading();showToast('Error.','error');}}
+window.deleteFriend=async function(id,name){if(!confirm(`Remove ${name}?`))return;showLoading('Removing...');try{await deleteDoc(doc(db,'users',id));if(currentEditId===id){currentEditId=null;document.getElementById('editSection').style.display='none';}hideLoading();showToast(`${name} removed.`);loadFriendsList();}catch(e){hideLoading();showToast('Error.','error');}};
+window.selectFriend=async function(id){showLoading('Loading...');try{const u=await getUserById(id);if(!u){hideLoading();return;}currentEditId=id;hideLoading();document.getElementById('editingFriendName').textContent=u.name;document.getElementById('editSection').style.display='block';document.getElementById('bulkImportText').value='';loadFriendsList();renderAllEditors(u);document.getElementById('editSection').scrollIntoView({behavior:'smooth'});}catch(e){hideLoading();showToast('Error.','error');}};
+window.switchAdminTab=function(btn,tabId){document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(tabId).classList.add('active');btn.classList.add('active');};
+
+// PARSER
+window.processBulkImport=async function(){if(!currentEditId)return;const raw=document.getElementById('bulkImportText').value.trim();if(!raw){showToast('Paste first!','error');return;}showLoading('Parsing...');try{const parsed=parseRawReading(raw);await updateDoc(doc(db,'users',currentEditId),{...parsed,lastUpdated:new Date().toISOString()});const u=await getUserById(currentEditId);renderAllEditors(u);hideLoading();showToast('Imported ✦');}catch(e){hideLoading();showToast('Error.','error');}};
+
+function parseRawReading(text){const result={};result.handShape=ef(text,'HAND SHAPE');result.lines={heart:{quality:ef(text,'QUALITY','HEART LINE','HEAD LINE'),length:ef(text,'LENGTH','HEART LINE','HEAD LINE'),depth:ef(text,'DEPTH','HEART LINE','HEAD LINE'),branches:ef(text,'BRANCHES','HEART LINE','HEAD LINE'),description:ef(text,'DESCRIPTION','HEART LINE','HEAD LINE')},head:{quality:ef(text,'QUALITY','HEAD LINE','LIFE LINE'),length:ef(text,'LENGTH','HEAD LINE','LIFE LINE'),depth:ef(text,'DEPTH','HEAD LINE','LIFE LINE'),branches:ef(text,'BRANCHES','HEAD LINE','LIFE LINE'),description:ef(text,'DESCRIPTION','HEAD LINE','LIFE LINE')},life:{quality:ef(text,'QUALITY','LIFE LINE','FATE LINE'),length:ef(text,'LENGTH','LIFE LINE','FATE LINE'),depth:ef(text,'DEPTH','LIFE LINE','FATE LINE'),branches:ef(text,'BRANCHES','LIFE LINE','FATE LINE'),description:ef(text,'DESCRIPTION','LIFE LINE','FATE LINE')},fate:{quality:ef(text,'QUALITY','FATE LINE','SUN LINE'),length:ef(text,'LENGTH','FATE LINE','SUN LINE'),depth:ef(text,'DEPTH','FATE LINE','SUN LINE'),branches:ef(text,'BRANCHES','FATE LINE','SUN LINE'),description:ef(text,'DESCRIPTION','FATE LINE','SUN LINE')},sun:{quality:ef(text,'QUALITY','SUN LINE','MERCURY LINE'),length:ef(text,'LENGTH','SUN LINE','MERCURY LINE'),depth:ef(text,'DEPTH','SUN LINE','MERCURY LINE'),branches:ef(text,'BRANCHES','SUN LINE','MERCURY LINE'),description:ef(text,'DESCRIPTION','SUN LINE','MERCURY LINE')},mercury:{quality:ef(text,'QUALITY','MERCURY LINE','MARRIAGE LINE'),length:ef(text,'LENGTH','MERCURY LINE','MARRIAGE LINE'),depth:ef(text,'DEPTH','MERCURY LINE','MARRIAGE LINE'),branches:ef(text,'BRANCHES','MERCURY LINE','MARRIAGE LINE'),description:ef(text,'DESCRIPTION','MERCURY LINE','MARRIAGE LINE')},marriage:{count:ef(text,'COUNT','MARRIAGE LINE','GIRDLE OF VENUS'),quality:ef(text,'QUALITY','MARRIAGE LINE','GIRDLE OF VENUS'),description:ef(text,'DESCRIPTION','MARRIAGE LINE','GIRDLE OF VENUS')},girdle_of_venus:{present:ef(text,'PRESENT','GIRDLE OF VENUS','RASCETTES'),description:ef(text,'DESCRIPTION','GIRDLE OF VENUS','RASCETTES')},rascettes:{count:ef(text,'COUNT','RASCETTES','MOUNT OF JUPITER'),description:ef(text,'DESCRIPTION','RASCETTES','MOUNT OF JUPITER')}};result.mounts={jupiter:{development:ef(text,'DEVELOPMENT','MOUNT OF JUPITER','MOUNT OF SATURN'),description:ef(text,'DESCRIPTION','MOUNT OF JUPITER','MOUNT OF SATURN')},saturn:{development:ef(text,'DEVELOPMENT','MOUNT OF SATURN','MOUNT OF APOLLO'),description:ef(text,'DESCRIPTION','MOUNT OF SATURN','MOUNT OF APOLLO')},apollo:{development:ef(text,'DEVELOPMENT','MOUNT OF APOLLO','MOUNT OF MERCURY'),description:ef(text,'DESCRIPTION','MOUNT OF APOLLO','MOUNT OF MERCURY')},mercury_mount:{development:ef(text,'DEVELOPMENT','MOUNT OF MERCURY','MOUNT OF VENUS'),description:ef(text,'DESCRIPTION','MOUNT OF MERCURY','MOUNT OF VENUS')},venus:{development:ef(text,'DEVELOPMENT','MOUNT OF VENUS','MOUNT OF MOON'),description:ef(text,'DESCRIPTION','MOUNT OF VENUS','MOUNT OF MOON')},moon:{development:ef(text,'DEVELOPMENT','MOUNT OF MOON','MARS POSITIVE'),description:ef(text,'DESCRIPTION','MOUNT OF MOON','MARS POSITIVE')},mars_positive:{development:ef(text,'DEVELOPMENT','MARS POSITIVE','MARS NEGATIVE'),description:ef(text,'DESCRIPTION','MARS POSITIVE','MARS NEGATIVE')},mars_negative:{development:ef(text,'DEVELOPMENT','MARS NEGATIVE','PLAIN OF MARS'),description:ef(text,'DESCRIPTION','MARS NEGATIVE','PLAIN OF MARS')},plain_of_mars:{development:ef(text,'DEVELOPMENT','PLAIN OF MARS','THUMB'),description:ef(text,'DESCRIPTION','PLAIN OF MARS','THUMB')}};result.fingers={thumb:{length:ef(text,'LENGTH','THUMB','INDEX FINGER'),tip_shape:ef(text,'TIP SHAPE','THUMB','INDEX FINGER'),flexibility:ef(text,'FLEXIBILITY','THUMB','INDEX FINGER'),phalanges:ef(text,'PHALANGES','THUMB','INDEX FINGER'),description:ef(text,'DESCRIPTION','THUMB','INDEX FINGER')},index:{length:ef(text,'LENGTH','INDEX FINGER','MIDDLE FINGER'),tip_shape:ef(text,'TIP SHAPE','INDEX FINGER','MIDDLE FINGER'),leaning:ef(text,'LEANING','INDEX FINGER','MIDDLE FINGER'),description:ef(text,'DESCRIPTION','INDEX FINGER','MIDDLE FINGER')},middle:{length:ef(text,'LENGTH','MIDDLE FINGER','RING FINGER'),tip_shape:ef(text,'TIP SHAPE','MIDDLE FINGER','RING FINGER'),leaning:ef(text,'LEANING','MIDDLE FINGER','RING FINGER'),description:ef(text,'DESCRIPTION','MIDDLE FINGER','RING FINGER')},ring:{length:ef(text,'LENGTH','RING FINGER','LITTLE FINGER'),tip_shape:ef(text,'TIP SHAPE','RING FINGER','LITTLE FINGER'),leaning:ef(text,'LEANING','RING FINGER','LITTLE FINGER'),description:ef(text,'DESCRIPTION','RING FINGER','LITTLE FINGER')},little:{length:ef(text,'LENGTH','LITTLE FINGER','CROSSES'),tip_shape:ef(text,'TIP SHAPE','LITTLE FINGER','CROSSES'),leaning:ef(text,'LEANING','LITTLE FINGER','CROSSES'),description:ef(text,'DESCRIPTION','LITTLE FINGER','CROSSES')}};result.specialMarkings={crosses:extractMarkings(text,'CROSSES','STARS'),stars:extractMarkings(text,'STARS','ISLANDS'),islands:extractMarkings(text,'ISLANDS','SQUARES'),squares:extractMarkings(text,'SQUARES','TRIANGLES'),triangles:extractMarkings(text,'TRIANGLES','GRILLES'),grilles:extractMarkings(text,'GRILLES','DOTS'),dots:extractMarkings(text,'DOTS','TRIDENTS'),tridents:extractMarkings(text,'TRIDENTS','STRENGTHS')};const cf=[ef(text,'BEST SUITED FIELDS','CAREER','RELATIONSHIPS'),ef(text,'CAREER TYPE','CAREER','RELATIONSHIPS'),ef(text,'PEAK CAREER PERIOD','CAREER','RELATIONSHIPS'),ef(text,'CAREER ACTIVATION AGE','CAREER','RELATIONSHIPS'),ef(text,'CAREER RISK PERIOD','CAREER','RELATIONSHIPS'),ef(text,'BUSINESS APTITUDE','CAREER','RELATIONSHIPS'),ef(text,'PARTNERSHIP SUITABILITY','CAREER','RELATIONSHIPS'),ef(text,'LEADERSHIP TIMELINE','CAREER','RELATIONSHIPS'),ef(text,'CAREER CHANGE INDICATOR','CAREER','RELATIONSHIPS'),ef(text,'DETAILED CAREER GUIDANCE','CAREER','RELATIONSHIPS')].filter(f=>f);const rf=[ef(text,'EMOTIONAL NATURE','RELATIONSHIPS','HEALTH'),ef(text,'ATTACHMENT STYLE','RELATIONSHIPS','HEALTH'),ef(text,'IDEAL PARTNER ELEMENT','RELATIONSHIPS','HEALTH'),ef(text,'IDEAL PARTNER TRAITS','RELATIONSHIPS','HEALTH'),ef(text,'RED FLAG TRAITS','RELATIONSHIPS','HEALTH'),ef(text,'RELATIONSHIP PATTERN','RELATIONSHIPS','HEALTH'),ef(text,'MARRIAGE TIMING','RELATIONSHIPS','HEALTH'),ef(text,'MARRIAGE TYPE','RELATIONSHIPS','HEALTH'),ef(text,'SECOND RELATIONSHIP INDICATOR','RELATIONSHIPS','HEALTH'),ef(text,'EMOTIONAL VULNERABILITY PERIOD','RELATIONSHIPS','HEALTH'),ef(text,'COMPATIBILITY BEST WITH','RELATIONSHIPS','HEALTH'),ef(text,'COMPATIBILITY WORST WITH','RELATIONSHIPS','HEALTH'),ef(text,'RELATIONSHIP AFTER MARRIAGE','RELATIONSHIPS','HEALTH'),ef(text,'CHILDREN INDICATOR','RELATIONSHIPS','HEALTH'),ef(text,'DETAILED RELATIONSHIP GUIDANCE','RELATIONSHIPS','HEALTH')].filter(f=>f);const ff=[ef(text,'EARNING STYLE','FINANCIAL','WARNINGS'),ef(text,'WEALTH ACCUMULATION PERIOD','FINANCIAL','WARNINGS'),ef(text,'FINANCIAL RISK PERIOD','FINANCIAL','WARNINGS'),ef(text,'SAVING TENDENCY','FINANCIAL','WARNINGS'),ef(text,'INVESTMENT APTITUDE','FINANCIAL','WARNINGS'),ef(text,'DETAILED FINANCIAL GUIDANCE','FINANCIAL','WARNINGS')].filter(f=>f);result.recommendations={strengths:ef(text,'STRENGTHS','STRENGTHS','WEAKNESSES'),weaknesses:ef(text,'WEAKNESSES','WEAKNESSES','CAREER'),career:cf.join('\n\n'),relationships:rf.join('\n\n'),health:ef(text,'HEALTH','HEALTH','SPIRITUAL'),spiritual:ef(text,'SPIRITUAL','SPIRITUAL','FINANCIAL'),financialTendency:ff.join('\n\n'),warnings:ef(text,'WARNINGS','WARNINGS','LUCKY COLOR'),luckyElements:{color:ef(text,'LUCKY COLOR','LUCKY COLOR','LUCKY NUMBER'),number:ef(text,'LUCKY NUMBER','LUCKY NUMBER','LUCKY DAY'),day:ef(text,'LUCKY DAY','LUCKY DAY','LUCKY GEMSTONE'),gemstone:ef(text,'LUCKY GEMSTONE','LUCKY GEMSTONE','TIMELINE EVENTS')}};result.timelineEvents=extractTimeline(text);result.personalNotes=ef(text,'PERSONAL NOTES','PERSONAL NOTES','END OF READING');return result;}
+function ef(text,fn,ss,se){return extractField(text,fn,ss,se);}
+function extractField(text,fn,ss,se){try{let s=text;if(ss){const i=text.indexOf(`=== ${ss} ===`);if(i!==-1)s=text.substring(i);}if(se){const i=s.indexOf(`=== ${se} ===`);if(i!==-1)s=s.substring(0,i);}const p=new RegExp(`^${fn}:\\s*(.+)$`,'mi');const m=s.match(p);if(m&&m[1]){const v=m[1].trim();if(v.toLowerCase()==='not analyzed yet'||v===''||v==='[')return'';return v;}const mp=new RegExp(`^${fn}:\\s*([\\s\\S]+?)(?=^[A-Z][A-Z\\s]+:|===|$)`,'mi');const mm=s.match(mp);if(mm&&mm[1]){const v=mm[1].trim();if(v.toLowerCase()==='not analyzed yet'||v===''||v==='[')return'';return v;}return'';}catch(e){return'';}}
+function extractMarkings(text,ss,se){try{const si=text.indexOf(`=== ${ss} ===`);if(si===-1)return[];const sc=si+ss.length+8;let s=text.substring(sc);const ei=text.indexOf(`=== ${se} ===`);if(ei!==-1)s=text.substring(sc,ei);return s.split('\n').map(l=>l.trim()).filter(l=>l&&!l.startsWith('=')&&l.toLowerCase()!=='none'&&!l.startsWith('[')&&l.length>5&&l.includes('-'));}catch(e){return[];}}
+function extractTimeline(text){try{const si=text.indexOf('=== TIMELINE EVENTS ===');if(si===-1)return[];const ei=text.indexOf('=== PERSONAL NOTES ===');const sec=ei!==-1?text.substring(si,ei):text.substring(si);const events=[];sec.split('\n').map(l=>l.trim()).filter(l=>l.startsWith('AGE')).forEach(line=>{const parts=line.split('|').map(p=>p.trim());if(parts.length>=3){const am=parts[0].match(/AGE\s+(\d+)/i);if(am){const age=parseInt(am[1]);if(age>=15&&age<=50)events.push({age,category:parts[1].toLowerCase().trim(),description:parts[2].trim(),source:'imported'});}}});return events.sort((a,b)=>a.age-b.age);}catch(e){return[];}}
+
+// EDITORS
+function renderAllEditors(u){renderLinesEditor(u);renderMountsEditor(u);renderFingersEditor(u);renderMarkingsEditor(u);renderRecsEditor(u);renderNotesEditor(u);}
+function renderLinesEditor(u){const l=u.lines||{};const cfg=[{k:'heart',l:'Heart',f:['quality','length','depth','branches','description']},{k:'head',l:'Head',f:['quality','length','depth','branches','description']},{k:'life',l:'Life',f:['quality','length','depth','branches','description']},{k:'fate',l:'Fate',f:['quality','length','depth','branches','description']},{k:'sun',l:'Sun',f:['quality','length','depth','branches','description']},{k:'mercury',l:'Mercury',f:['quality','length','depth','branches','description']},{k:'marriage',l:'Marriage',f:['count','quality','description']},{k:'girdle_of_venus',l:'Girdle',f:['present','description']},{k:'rascettes',l:'Rascettes',f:['count','description']}];let h='';cfg.forEach(x=>{const ln=l[x.k]||{};h+=`<div class="editor-block"><h3>${x.l}</h3>`;x.f.forEach(f=>{const v=ln[f]||'';if(f==='description')h+=`<div class="form-group"><label>${f}</label><textarea id="ed_l_${x.k}_${f}" rows="2">${v}</textarea></div>`;else h+=`<div class="form-group"><label>${f}</label><input type="text" id="ed_l_${x.k}_${f}" value="${v}"></div>`;});h+=`</div>`;});document.getElementById('linesEditorContent').innerHTML=h;}
+function renderMountsEditor(u){const m=u.mounts||{};const cfg=[{k:'jupiter',l:'Jupiter'},{k:'saturn',l:'Saturn'},{k:'apollo',l:'Apollo'},{k:'mercury_mount',l:'Mercury'},{k:'venus',l:'Venus'},{k:'moon',l:'Moon'},{k:'mars_positive',l:'Mars +'},{k:'mars_negative',l:'Mars −'},{k:'plain_of_mars',l:'Plain'}];const opts=['Well-developed','Moderately developed','Underdeveloped','Flat','Overdeveloped'];let h='';cfg.forEach(x=>{const mt=m[x.k]||{};h+=`<div class="editor-block"><h3>${x.l}</h3><div class="form-group"><label>Dev</label><select id="ed_m_${x.k}_d"><option value="">-</option>${opts.map(o=>`<option value="${o}"${mt.development===o?' selected':''}>${o}</option>`).join('')}</select></div><div class="form-group"><label>Desc</label><textarea id="ed_m_${x.k}_desc" rows="2">${mt.description||''}</textarea></div></div>`;});document.getElementById('mountsEditorContent').innerHTML=h;}
+function renderFingersEditor(u){const f=u.fingers||{};const cfg=[{k:'thumb',l:'Thumb',ex:['flexibility','phalanges']},{k:'index',l:'Index',ex:['leaning']},{k:'middle',l:'Middle',ex:['leaning']},{k:'ring',l:'Ring',ex:['leaning']},{k:'little',l:'Little',ex:['leaning']}];let h='';cfg.forEach(x=>{const fg=f[x.k]||{};h+=`<div class="editor-block"><h3>${x.l}</h3><div class="form-row"><div class="form-group"><label>Length</label><input type="text" id="ed_f_${x.k}_len" value="${fg.length||''}"></div><div class="form-group"><label>Tip</label><input type="text" id="ed_f_${x.k}_tip" value="${fg.tip_shape||''}"></div></div>`;x.ex.forEach(e=>{h+=`<div class="form-group"><label>${e}</label><input type="text" id="ed_f_${x.k}_${e}" value="${fg[e]||''}"></div>`;});h+=`<div class="form-group"><label>Desc</label><textarea id="ed_f_${x.k}_desc" rows="2">${fg.description||''}</textarea></div></div>`;});document.getElementById('fingersEditorContent').innerHTML=h;}
+function renderMarkingsEditor(u){const mk=u.specialMarkings||{};let h='';['crosses','stars','islands','squares','triangles','grilles','dots','tridents'].forEach(tp=>{const items=mk[tp]||[];h+=`<div class="editor-block"><h3>${cap(tp)}</h3><div class="form-group"><textarea id="ed_mk_${tp}" rows="2">${items.join('\n')}</textarea></div></div>`;});document.getElementById('markingsEditorContent').innerHTML=h;}
+function renderRecsEditor(u){const r=u.recommendations||{};const lk=r.luckyElements||{};let h='';[{k:'strengths',l:'Strengths'},{k:'weaknesses',l:'Growth'},{k:'career',l:'Career'},{k:'relationships',l:'Love'},{k:'health',l:'Health'},{k:'spiritual',l:'Spiritual'},{k:'financialTendency',l:'Financial'},{k:'warnings',l:'Warnings'}].forEach(f=>{h+=`<div class="editor-block"><h3>${f.l}</h3><div class="form-group"><textarea id="ed_r_${f.k}" rows="3">${r[f.k]||''}</textarea></div></div>`;});h+=`<div class="editor-block"><h3>Lucky</h3><div class="form-row"><div class="form-group"><label>Color</label><input type="text" id="ed_lk_color" value="${lk.color||''}"></div><div class="form-group"><label>Number</label><input type="text" id="ed_lk_number" value="${lk.number||''}"></div></div><div class="form-row"><div class="form-group"><label>Day</label><input type="text" id="ed_lk_day" value="${lk.day||''}"></div><div class="form-group"><label>Gem</label><input type="text" id="ed_lk_gemstone" value="${lk.gemstone||''}"></div></div></div>`;document.getElementById('recsEditorContent').innerHTML=h;}
+function renderNotesEditor(u){document.getElementById('editHandShape').value=u.handShape||'';document.getElementById('editPersonalNotes').value=u.personalNotes||'';}
+
+window.saveSection=async function(section){if(!currentEditId)return;showLoading('Saving...');try{let u={};if(section==='lines'){const keys=['heart','head','life','fate','sun','mercury','marriage','girdle_of_venus','rascettes'];const fm={heart:['quality','length','depth','branches','description'],head:['quality','length','depth','branches','description'],life:['quality','length','depth','branches','description'],fate:['quality','length','depth','branches','description'],sun:['quality','length','depth','branches','description'],mercury:['quality','length','depth','branches','description'],marriage:['count','quality','description'],girdle_of_venus:['present','description'],rascettes:['count','description']};u.lines={};keys.forEach(k=>{u.lines[k]={};fm[k].forEach(f=>{const el=document.getElementById(`ed_l_${k}_${f}`);if(el)u.lines[k][f]=el.value;});});}if(section==='mounts'){const keys=['jupiter','saturn','apollo','mercury_mount','venus','moon','mars_positive','mars_negative','plain_of_mars'];u.mounts={};keys.forEach(k=>{u.mounts[k]={development:document.getElementById(`ed_m_${k}_d`).value,description:document.getElementById(`ed_m_${k}_desc`).value};});}if(section==='fingers'){const cfg={thumb:['len','tip','flexibility','phalanges','desc'],index:['len','tip','leaning','desc'],middle:['len','tip','leaning','desc'],ring:['len','tip','leaning','desc'],little:['len','tip','leaning','desc']};u.fingers={};for(const[k,flds]of Object.entries(cfg)){u.fingers[k]={};flds.forEach(f=>{const el=document.getElementById(`ed_f_${k}_${f}`);if(el){const rk=f==='len'?'length':f==='tip'?'tip_shape':f==='desc'?'description':f;u.fingers[k][rk]=el.value;}});}}if(section==='markings'){u.specialMarkings={};['crosses','stars','islands','squares','triangles','grilles','dots','tridents'].forEach(tp=>{const txt=document.getElementById(`ed_mk_${tp}`).value;u.specialMarkings[tp]=txt.split('\n').map(s=>s.trim()).filter(s=>s);});}if(section==='recommendations'){const flds=['career','relationships','health','spiritual','financialTendency','strengths','weaknesses','warnings'];u.recommendations={};flds.forEach(f=>{u.recommendations[f]=document.getElementById(`ed_r_${f}`).value;});u.recommendations.luckyElements={color:document.getElementById('ed_lk_color').value,number:document.getElementById('ed_lk_number').value,day:document.getElementById('ed_lk_day').value,gemstone:document.getElementById('ed_lk_gemstone').value};}if(section==='notes'){u.handShape=document.getElementById('editHandShape').value;u.personalNotes=document.getElementById('editPersonalNotes').value;}u.lastUpdated=new Date().toISOString();await updateDoc(doc(db,'users',currentEditId),u);hideLoading();showToast(`Saved ✦`);}catch(e){hideLoading();showToast('Error.','error');}};
+
+// GREETING
+function generateGreeting(user){const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];const today=days[new Date().getDay()];const hrs=new Date().getHours();const tg=hrs<12?'morning':hrs<17?'afternoon':'evening';const pm={Sunday:{p:'Sun',q:'radiance',i:'☉'},Monday:{p:'Moon',q:'intuition',i:'☽'},Tuesday:{p:'Mars',q:'courage',i:'♂'},Wednesday:{p:'Mercury',q:'intelligence',i:'☿'},Thursday:{p:'Jupiter',q:'wisdom',i:'♃'},Friday:{p:'Venus',q:'beauty',i:'♀'},Saturday:{p:'Saturn',q:'discipline',i:'♄'}};const di=pm[today];const name=user.name.split(' ')[0];const age=calcAge(user.dob);const el=user.handShape||'';const m=user.mounts||{};const ml={jupiter:'Jupiter',saturn:'Saturn',apollo:'Apollo',mercury_mount:'Mercury',venus:'Venus',moon:'Moon'};let dm='the cosmos';for(const[k,v]of Object.entries(m)){if(v?.development?.includes('Well')){dm=ml[k]||k;break;}}let eLine='Your palm carries a rare signature.';if(el==='Fire')eLine='Your fire hand burns with sovereign purpose.';else if(el==='Water')eLine='Your water hand flows with ancient knowing.';else if(el==='Earth')eLine='Your earth hand holds the quiet power of mountains.';else if(el==='Air')eLine='Your air hand carries the frequency of thought.';const gs=[`Good ${tg}, <span class="greeting-name">${name}</span>.\n\nYou are ${age}. ${today}.\n${di.i} ${di.p} brings ${di.q} today.\n\n${eLine}\n${dm} resonates in your palm.\n\nWhat follows is a mirror.\nLook carefully.`,`<span class="greeting-name">${name}</span>, age ${age}.\n\n${di.p} presides this ${today} — ${di.q}.\n\n${eLine}\n\nYour palm reveals who you already are.\nProceed with clarity.`,`The ${tg} finds you here, <span class="greeting-name">${name}</span>.\nAge ${age}. ${di.i} ${di.p} moves today.\n\n${eLine}\n\nThe lines are questions\nthe universe asks you.\nLet us read them.`];return gs[Math.floor(Math.random()*gs.length)];}
+
+// ELEMENT
+function getElData(hs){const e={Fire:{icon:'🔥',title:'YOU ARE FIRE',sub:'The Sovereign',cls:'fire',traits:['Passionate','Courageous','Visionary','Magnetic','Bold'],quote:'Born to lead, not follow.'},Water:{icon:'🌊',title:'YOU ARE WATER',sub:'The Mystic',cls:'water',traits:['Intuitive','Emotional','Creative','Empathetic','Perceptive'],quote:'The deepest rivers are the quietest.'},Earth:{icon:'🌿',title:'YOU ARE EARTH',sub:'The Builder',cls:'earth',traits:['Practical','Reliable','Grounded','Patient','Loyal'],quote:'Your strength is in your stillness.'},Air:{icon:'💨',title:'YOU ARE AIR',sub:'The Thinker',cls:'air',traits:['Intellectual','Communicative','Curious','Analytical','Inventive'],quote:'Your mind connects worlds others cannot see.'},Mixed:{icon:'✨',title:'MULTIFOLD',sub:'The Alchemist',cls:'air',traits:['Versatile','Adaptive','Complex','Dynamic','Unpredictable'],quote:'You are the meeting point of all forces.'}};return e[hs]||e.Mixed;}
+
+// SCORES WITH BREAKDOWN
+function calcScoresDetailed(u){const m=u.mounts||{};const l=u.lines||{};const f=u.fingers||{};
+  const career={base:45,factors:[]};
+  if(m.jupiter?.development?.includes('Well')){career.base+=14;career.factors.push({n:'Jupiter Mount',v:'+14',c:'ef-pos'});}
+  if(m.apollo?.development?.includes('Well')){career.base+=10;career.factors.push({n:'Apollo Mount',v:'+10',c:'ef-pos'});}
+  if(m.saturn?.development?.includes('Well')){career.base+=8;career.factors.push({n:'Saturn Mount',v:'+8',c:'ef-pos'});}
+  if(l.fate?.quality?.includes('Clear')){career.base+=12;career.factors.push({n:'Fate Line Clear',v:'+12',c:'ef-pos'});}
+  if(l.sun?.length&&!l.sun.length.includes('Absent')){career.base+=10;career.factors.push({n:'Sun Line Present',v:'+10',c:'ef-pos'});}
+  if(l.head?.quality?.includes('Clear')){career.base+=4;career.factors.push({n:'Head Line Clear',v:'+4',c:'ef-pos'});}
+
+  const love={base:45,factors:[]};
+  if(m.venus?.development?.includes('Well')){love.base+=14;love.factors.push({n:'Venus Mount',v:'+14',c:'ef-pos'});}
+  if(l.heart?.quality?.includes('Clear')){love.base+=12;love.factors.push({n:'Heart Line Clear',v:'+12',c:'ef-pos'});}
+  if(l.heart?.length?.includes('Long')){love.base+=8;love.factors.push({n:'Heart Line Long',v:'+8',c:'ef-pos'});}
+  if(l.marriage?.count&&parseInt(l.marriage.count)>=1){love.base+=8;love.factors.push({n:'Marriage Line',v:'+8',c:'ef-pos'});}
+  if(m.moon?.development?.includes('Well')){love.base+=4;love.factors.push({n:'Moon Mount',v:'+4',c:'ef-pos'});}
+
+  const spiritual={base:45,factors:[]};
+  if(m.moon?.development?.includes('Well')){spiritual.base+=14;spiritual.factors.push({n:'Moon Mount',v:'+14',c:'ef-pos'});}
+  if(m.saturn?.development?.includes('Well')){spiritual.base+=10;spiritual.factors.push({n:'Saturn Mount',v:'+10',c:'ef-pos'});}
+  if(l.head?.quality?.includes('Clear')){spiritual.base+=8;spiritual.factors.push({n:'Head Line Clear',v:'+8',c:'ef-pos'});}
+  if(l.girdle_of_venus?.present?.includes('Yes')){spiritual.base+=8;spiritual.factors.push({n:'Girdle of Venus',v:'+8',c:'ef-pos'});}
+
+  const financial={base:45,factors:[]};
+  if(m.mercury_mount?.development?.includes('Well')){financial.base+=14;financial.factors.push({n:'Mercury Mount',v:'+14',c:'ef-pos'});}
+  if(m.jupiter?.development?.includes('Well')){financial.base+=8;financial.factors.push({n:'Jupiter Mount',v:'+8',c:'ef-pos'});}
+  if(l.fate?.quality?.includes('Clear')){financial.base+=10;financial.factors.push({n:'Fate Line Clear',v:'+10',c:'ef-pos'});}
+  if(l.sun?.quality?.includes('Clear')){financial.base+=8;financial.factors.push({n:'Sun Line Clear',v:'+8',c:'ef-pos'});}
+
+  const health={base:45,factors:[]};
+  if(l.life?.quality?.includes('Clear')){health.base+=14;health.factors.push({n:'Life Line Clear',v:'+14',c:'ef-pos'});}
+  if(l.life?.depth?.includes('Deep')){health.base+=10;health.factors.push({n:'Life Line Deep',v:'+10',c:'ef-pos'});}
+  if(l.life?.length?.includes('Long')){health.base+=8;health.factors.push({n:'Life Line Long',v:'+8',c:'ef-pos'});}
+  if(m.venus?.development?.includes('Well')){health.base+=7;health.factors.push({n:'Venus Mount',v:'+7',c:'ef-pos'});}
+  if(l.life?.quality?.includes('Chain')){health.base-=8;health.factors.push({n:'Life Line Chained',v:'-8',c:'ef-neg'});}
+
+  const cp=v=>Math.min(Math.max(Math.round(v),25),97);
+  return{career:{score:cp(career.base),factors:career.factors},love:{score:cp(love.base),factors:love.factors},spiritual:{score:cp(spiritual.base),factors:spiritual.factors},financial:{score:cp(financial.base),factors:financial.factors},health:{score:cp(health.base),factors:health.factors}};
+}
+
+// DUALITY
+function genDuality(u){const m=u.mounts||{};const l=u.lines||{};const f=u.fingers||{};const pairs=[];
+  if(m.jupiter?.development?.includes('Well'))pairs.push({l:'Natural Leader',s:'Can Dominate'});
+  if(m.venus?.development?.includes('Well'))pairs.push({l:'Deeply Loving',s:'Over-Attached'});
+  if(m.moon?.development?.includes('Well'))pairs.push({l:'Highly Intuitive',s:'Overthinks'});
+  if(m.mercury_mount?.development?.includes('Well'))pairs.push({l:'Quick-Witted',s:'Restless Mind'});
+  if(m.apollo?.development?.includes('Well'))pairs.push({l:'Creative',s:'Seeks Validation'});
+  if(m.saturn?.development?.includes('Well'))pairs.push({l:'Disciplined',s:'Too Serious'});
+  if(l.heart?.quality?.includes('Clear'))pairs.push({l:'Balanced Heart',s:'Guards Emotions'});
+  if(l.head?.quality?.includes('Clear'))pairs.push({l:'Sharp Mind',s:'Cold Logic'});
+  if(l.fate?.quality?.includes('Clear'))pairs.push({l:'Strong Purpose',s:'Rigid Path'});
+  if(f.thumb?.flexibility?.includes('Flexible'))pairs.push({l:'Adaptable',s:'Easily Swayed'});
+  if(f.thumb?.flexibility?.includes('Stiff'))pairs.push({l:'Strong-Willed',s:'Inflexible'});
+  if(pairs.length===0)pairs.push({l:'Inner Strength',s:'Self-Doubt'},{l:'Evolving',s:'Scattered'},{l:'Potential',s:'Fear'});
+  return pairs.slice(0,6);}
+
+// MOUNTS & SPOTLIGHTS
+function calcMounts(mounts){if(!mounts)return[];const ds={'Well-developed':95,'Overdeveloped':85,'Moderately developed':60,'Underdeveloped':30,'Flat':10};const ml={jupiter:{l:'Jupiter',i:'♃'},saturn:{l:'Saturn',i:'♄'},apollo:{l:'Apollo',i:'☉'},mercury_mount:{l:'Mercury',i:'☿'},venus:{l:'Venus',i:'♀'},moon:{l:'Moon',i:'☽'},mars_positive:{l:'Mars +',i:'♂'},mars_negative:{l:'Mars −',i:'♂'},plain_of_mars:{l:'Plain',i:'⬜'}};const r=[];for(const[k,v]of Object.entries(mounts)){if(!v?.development)continue;const info=ml[k];if(!info)continue;r.push({label:info.l,icon:info.i,score:ds[v.development]||0,dev:v.development});}return r.sort((a,b)=>b.score-a.score);}
+function getSpotlights(mk){if(!mk)return[];const sp=[];[{k:'stars',i:'⭐',l:'STAR',r:'~5%',s:'Cosmic alignment.'},{k:'tridents',i:'🔱',l:'TRIDENT',r:'Rare',s:'Triple blessing.'},{k:'squares',i:'🛡️',l:'PROTECTION',r:'~10%',s:'Divine shield.'},{k:'triangles',i:'△',l:'TRIANGLE',r:'Mastery',s:'Achievement.'}].forEach(t=>{const items=mk[t.k];if(items?.length>0)items.forEach(item=>{sp.push({icon:t.i,label:t.l,rarity:t.r,desc:item,sig:t.s});});});return sp;}
+
+// Q&A ENGINE
+function generateAnswer(q,user){const ql=q.toLowerCase();const r=user.recommendations||{};const scores=calcScoresDetailed(user);const name=user.name.split(' ')[0];const age=calcAge(user.dob);const tl=user.timelineEvents||[];let cat='general';if(ql.match(/career|job|work|placement|business|profession|company|intern|study|mba|education/))cat='career';else if(ql.match(/love|relationship|marriage|partner|girlfriend|boyfriend|dating|propose|breakup|crush/))cat='love';else if(ql.match(/money|salary|rich|wealth|invest|financial|earning|income/))cat='money';else if(ql.match(/health|illness|body|fitness|disease|stress|anxiety/))cat='health';else if(ql.match(/spiritual|meditation|karma|purpose|soul/))cat='spiritual';else if(ql.match(/future|next year|when|age|timing|predict|will i/))cat='future';
+  const nextEvent=tl.find(e=>e.age>age);const catEvents=tl.filter(e=>e.category===cat);
+  let a='';
+  if(cat==='career'){a=`${name}, you're ${age} right now.\n\n`;if(catEvents.length>0){const next=catEvents.find(e=>e.age>age);if(next)a+=`⚡ Next career marker: Age ${next.age} (${next.age-age} years away)\n"${next.description}"\n\n`;}a+=`Career Force: ${scores.career.score}%\n\n`;const cd=r.career;if(cd){const lines=cd.split('\n').filter(l=>l.trim());a+=lines.slice(0,4).join('\n')+'\n\n';}if(r.warnings)a+=`⚠️ ${r.warnings.split('.')[0]}.`;}
+  else if(cat==='love'){a=`${name}, at age ${age}:\n\n`;if(catEvents.length>0){const next=catEvents.find(e=>e.age>age);if(next)a+=`💗 Next love marker: Age ${next.age} (${next.age-age} years away)\n"${next.description}"\n\n`;}a+=`Love Energy: ${scores.love.score}%\n\n`;const ld=r.relationships;if(ld){const lines=ld.split('\n').filter(l=>l.trim());a+=lines.slice(0,4).join('\n');}}
+  else if(cat==='money'){a=`${name}, financial outlook at ${age}:\n\n`;a+=`Financial Flow: ${scores.financial.score}%\n\n`;const fd=r.financialTendency;if(fd){const lines=fd.split('\n').filter(l=>l.trim());a+=lines.slice(0,4).join('\n')+'\n\n';}if(r.warnings)a+=`⚠️ ${r.warnings.split('.')[0]}.`;}
+  else if(cat==='health'){a=`${name}, health at ${age}:\n\nVitality: ${scores.health.score}%\n\n`;if(r.health)a+=r.health.split('.').slice(0,3).join('.')+'.';const he=tl.filter(e=>e.category==='health'&&e.age>age);if(he.length>0)a+=`\n\n🌿 Watch age ${he[0].age}: ${he[0].description}`;}
+  else if(cat==='spiritual'){a=`${name}, spiritual depth: ${scores.spiritual.score}%\n\n`;if(r.spiritual)a+=r.spiritual.split('.').slice(0,3).join('.')+'.';} 
+  else if(cat==='future'){a=`${name}, you are ${age}. Here's what lies ahead:\n\n`;const future=tl.filter(e=>e.age>=age);if(future.length>0){future.slice(0,5).forEach(e=>{const icon={career:'⚡',love:'💗',health:'🌿',spiritual:'🧘',travel:'✈️',life:'◉'}[e.category]||'◉';a+=`${icon} Age ${e.age} (${e.age-age>0?'in '+( e.age-age)+' yrs':'now'}): ${e.description}\n\n`;});}else a+='No specific timeline events recorded yet.\n\n';if(r.warnings)a+=`⚠️ ${r.warnings.split('.')[0]}.`;}
+  else{a=`${name}, age ${age}:\n\nCareer: ${scores.career.score}% · Love: ${scores.love.score}% · Financial: ${scores.financial.score}%\n\n`;if(nextEvent)a+=`Next life marker: Age ${nextEvent.age} — ${nextEvent.description}\n\n`;if(r.strengths)a+=`Strengths: ${r.strengths.split('.')[0]}.`;}
+  return a.trim()||`${name}, I don't have enough data to answer that specifically. Check with Raj for an updated reading.`;}
+
+// RENDER ALL SCREENS
+function renderAllScreens(user){document.getElementById('navUserName').textContent=user.name;renderHome(user);renderCareer(user);renderLove(user);renderMoney(user);renderFuture(user);renderAsk(user);}
+
+// HOME
+function renderHome(user){const el=getElData(user.handShape);const scores=calcScoresDetailed(user);const pairs=genDuality(user);const lk=user.recommendations?.luckyElements||{};const age=calcAge(user.dob);let h='';
+  h+=`<div class="card" style="text-align:center;padding:20px"><div style="font-size:12px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">You are currently</div><div style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--purple-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Age ${age}</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px">${user.name} · ${el.sub}</div></div>`;
+  h+=`<div class="element-card ${el.cls}"><div class="element-icon">${el.icon}</div><div class="element-title">${el.title}</div><div class="element-sub">${el.sub}</div><div class="element-traits">${el.traits.map(t=>`<span class="element-trait">${t}</span>`).join('')}</div><div class="element-quote">"${el.quote}"</div></div>`;
+  // EXPANDABLE SCORES
+  h+=`<div class="card"><h2><span class="accent">◈</span> Life Forces</h2>`;
+  [{k:'career',l:'Career',i:'⚡',s:scores.career},{k:'love',l:'Love',i:'💗',s:scores.love},{k:'spiritual',l:'Spiritual',i:'🧘',s:scores.spiritual},{k:'financial',l:'Financial',i:'💰',s:scores.financial},{k:'health',l:'Health',i:'🌿',s:scores.health}].forEach(x=>{
+    h+=`<div class="exp-score ${x.k}" onclick="this.classList.toggle('open')"><div class="exp-score-header"><div class="exp-score-icon">${x.i}</div><div class="exp-score-info"><div class="exp-score-label">${x.l}</div><div class="exp-score-bar-bg"><div class="exp-score-bar-fill" data-target="${x.s.score}"></div></div></div><div class="exp-score-val">${x.s.score}%</div><div class="exp-score-arrow">▼</div></div><div class="exp-score-detail"><div class="exp-score-detail-inner">${x.s.factors.length>0?x.s.factors.map(f=>`<div class="exp-factor"><span class="ef-name">${f.n}</span><span class="ef-val ${f.c}">${f.v}</span></div>`).join(''):'<div style="color:var(--text-muted);font-size:12px;text-align:center;padding:8px">No specific factors detected yet</div>'}</div></div></div>`;
+  });h+=`</div>`;
+  // FLIP CARDS
+  h+=`<div class="card"><h2><span class="accent">◈</span> Light & Shadow</h2><div class="flip-grid">`;
+  pairs.forEach(p=>{h+=`<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-front"><div class="flip-icon">☀️</div><div class="flip-label">Light</div><div class="flip-trait">${p.l}</div></div><div class="flip-back"><div class="flip-icon">🌑</div><div class="flip-label">Shadow</div><div class="flip-trait">${p.s}</div></div></div></div>`;});
+  h+=`</div><div class="flip-hint">tap cards to reveal shadow side</div></div>`;
+  // LUCKY
+  if(hasContent(lk)){let li='';if(lk.color)li+=`<div class="lucky-item"><div class="icon">🎨</div><div class="lucky-label">Color</div><div class="lucky-value">${lk.color}</div></div>`;if(lk.number)li+=`<div class="lucky-item"><div class="icon">🔢</div><div class="lucky-label">Number</div><div class="lucky-value">${lk.number}</div></div>`;if(lk.day)li+=`<div class="lucky-item"><div class="icon">📅</div><div class="lucky-label">Day</div><div class="lucky-value">${lk.day}</div></div>`;if(lk.gemstone)li+=`<div class="lucky-item"><div class="icon">💎</div><div class="lucky-label">Gem</div><div class="lucky-value">${lk.gemstone}</div></div>`;if(li)h+=`<div class="card"><h2><span class="accent">◈</span> Cosmic Alignments</h2><div class="lucky-grid">${li}</div></div>`;}
+  h+=`<div class="watermark"><div class="cosmic-seal tiny" style="margin:0 auto 6px"><div class="seal-ring-outer"></div><div class="seal-ring-mid"></div><div class="seal-ring-inner"></div><span class="seal-char">र</span></div><div class="watermark-text">Karmarekha by Raj</div></div>`;
+  document.getElementById('screenHome').innerHTML=h;}
+
+// INTERACTIVE TIMELINE BUILDER
+function buildTimeline(events,currentAge,filterCat){
+  const filtered=filterCat?events.filter(e=>e.category===filterCat):events;
+  if(!filtered.length)return'<div class="no-data">No events yet.</div>';
+  const catColors={career:'var(--cyan)',love:'var(--pink)',health:'var(--earth)',spiritual:'var(--air)',travel:'var(--gold)',life:'var(--text-secondary)'};
+  const catIcons={career:'⚡',love:'💗',health:'🌿',spiritual:'🧘',travel:'✈️',life:'◉'};
+  const nextEvent=filtered.find(e=>e.age>currentAge);
+  let h=`<div class="itl-age-marker"><span>You are Age ${currentAge}</span></div>`;
+  h+=`<div class="itl-container"><div class="itl-list">`;
+  filtered.forEach((ev,i)=>{
+    const col=catColors[ev.category]||catColors.life;
+    const ico=catIcons[ev.category]||'◉';
+    const isPast=ev.age<currentAge;const isCurrent=ev.age===currentAge;const isNext=nextEvent&&ev.age===nextEvent.age;
+    const cls=isPast?'past':isCurrent?'current':'';
+    const diff=ev.age-currentAge;const countdown=diff>0?`${diff} year${diff>1?'s':''} from now`:diff===0?'This is your current age':`${Math.abs(diff)} year${Math.abs(diff)>1?'s':''} ago`;
+    h+=`<div class="itl-node ${cls}" onclick="this.classList.toggle('expanded')" style="animation-delay:${i*0.06}s">
+      <div class="itl-dot-col">${i<filtered.length-1?'<div class="itl-line-seg"></div>':''}<div class="itl-dot ${isNext?'glow':''}" style="border:2px solid ${col};color:${col};background:var(--bg-void);${isNext?'box-shadow:0 0 12px '+col+'40':''}">${ico}</div>${i<filtered.length-1?'<div class="itl-line-seg"></div>':''}</div>
+      <div class="itl-info"><span class="itl-info-age" style="color:${col}">Age ${ev.age}</span><span class="itl-info-cat">${ev.category}</span><div class="itl-info-desc">${ev.description}</div><div class="itl-info-countdown" style="color:${isPast?'var(--text-muted)':'var(--gold)'}">${countdown}</div></div>
+    </div>`;
+  });
+  h+=`</div></div>`;
+  if(nextEvent){h+=`<div class="itl-next-event"><div class="itl-next-label">Next Event</div><div class="itl-next-text">Age ${nextEvent.age} — ${nextEvent.description} (${nextEvent.age-currentAge} yr${nextEvent.age-currentAge>1?'s':''})</div></div>`;}
+  return h;}
+
+// CAREER
+function renderCareer(user){const scores=calcScoresDetailed(user);const r=user.recommendations||{};const age=calcAge(user.dob);const tl=user.timelineEvents||[];let h='';
+  h+=`<div class="hero-score career"><div class="hero-score-value">${scores.career.score}%</div><div class="hero-score-label">Career Force</div></div>`;
+  if(r.career)h+=`<div class="card"><h2><span class="accent">💼</span> Career Guidance</h2><div class="detail-card career-border"><p>${r.career}</p></div></div>`;
+  h+=`<div class="card"><h2><span class="accent">⚡</span> Career Timeline</h2>${buildTimeline(tl,age,'career')}</div>`;
+  if(r.strengths)h+=`<div class="card"><h2><span class="accent">💪</span> Strengths</h2><div class="detail-card"><p>${r.strengths}</p></div></div>`;
+  if(r.warnings)h+=`<div class="card"><h2><span class="accent">⚠️</span> Cautions</h2><div class="detail-card warning"><p>${r.warnings}</p></div></div>`;
+  document.getElementById('screenCareer').innerHTML=h;}
+
+// LOVE
+function renderLove(user){const scores=calcScoresDetailed(user);const r=user.recommendations||{};const age=calcAge(user.dob);const tl=user.timelineEvents||[];let h='';
+  h+=`<div class="hero-score love"><div class="hero-score-value">${scores.love.score}%</div><div class="hero-score-label">Love Energy</div></div>`;
+  if(r.relationships)h+=`<div class="card"><h2><span class="accent">💕</span> Love & Relationships</h2><div class="detail-card love-border"><p>${r.relationships}</p></div></div>`;
+  h+=`<div class="card"><h2><span class="accent">💗</span> Love Timeline</h2>${buildTimeline(tl,age,'love')}</div>`;
+  if(r.weaknesses)h+=`<div class="card"><h2><span class="accent">🔍</span> Growth Areas</h2><div class="detail-card"><p>${r.weaknesses}</p></div></div>`;
+  document.getElementById('screenLove').innerHTML=h;}
+
+// MONEY
+function renderMoney(user){const scores=calcScoresDetailed(user);const r=user.recommendations||{};let h='';
+  h+=`<div class="hero-score money"><div class="hero-score-value">${scores.financial.score}%</div><div class="hero-score-label">Financial Flow</div></div>`;
+  if(r.financialTendency)h+=`<div class="card"><h2><span class="accent">💰</span> Financial Path</h2><div class="detail-card gold-border"><p>${r.financialTendency}</p></div></div>`;
+  if(r.health)h+=`<div class="card"><h2><span class="accent">🌿</span> Health & Stability</h2><div class="detail-card"><h3>Vitality: ${scores.health.score}%</h3><p>${r.health}</p></div></div>`;
+  if(r.warnings)h+=`<div class="card"><h2><span class="accent">⚠️</span> Cautions</h2><div class="detail-card warning"><p>${r.warnings}</p></div></div>`;
+  document.getElementById('screenMoney').innerHTML=h;}
+
+// FUTURE
+function renderFuture(user){const tl=user.timelineEvents||[];const r=user.recommendations||{};const sp=getSpotlights(user.specialMarkings);const ms=calcMounts(user.mounts);const age=calcAge(user.dob);let h='';
+  h+=`<div class="card"><h2><span class="accent">◈</span> Complete Timeline</h2>${buildTimeline(tl,age,null)}</div>`;
+  if(sp.length>0){h+=`<div class="card"><h2><span class="accent">✨</span> Rare Markings</h2>`;sp.forEach(s=>{h+=`<div class="marking-spotlight"><div style="font-size:32px;margin-bottom:8px">${s.icon}</div><div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);letter-spacing:2px;margin-bottom:4px">${s.label}</div><div style="font-size:9px;color:var(--gold-muted);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase">${s.rarity}</div><div style="font-size:13px;color:var(--text-secondary);font-style:italic;line-height:1.7">${s.desc}</div></div>`;});h+=`</div>`;}
+  if(ms.length>0){h+=`<div class="card"><h2><span class="accent">◈</span> Mount Energies</h2>`;ms.forEach(m=>{h+=`<div style="display:flex;align-items:center;gap:12px;padding:8px 0"><span style="font-size:12px;color:var(--text-secondary);min-width:80px">${m.icon} ${m.label}</span><div style="flex:1;height:4px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden"><div class="exp-score-bar-fill" data-target="${m.score}" style="height:100%;border-radius:2px;background:linear-gradient(90deg,var(--purple-mid),var(--cyan));width:0"></div></div><span style="font-size:10px;color:var(--text-muted);min-width:40px;text-align:right">${m.dev}</span></div>`;});h+=`</div>`;}
+  if(r.spiritual)h+=`<div class="card"><h2><span class="accent">🧘</span> Spiritual</h2><div class="detail-card"><p>${r.spiritual}</p></div></div>`;
+  if(user.personalNotes)h+=`<div class="card"><h2><span class="accent">📝</span> Notes from Raj</h2><div style="color:var(--text-secondary);font-size:14px;line-height:2;white-space:pre-wrap">${user.personalNotes}</div></div>`;
+  h+=`<div class="raw-toggle" onclick="toggleRawData()">📋 View Palm Analysis</div><div class="raw-data-container" id="rawDataContainer">${renderRaw(user)}</div>`;
+  document.getElementById('screenFuture').innerHTML=h;}
+window.toggleRawData=function(){document.getElementById('rawDataContainer').classList.toggle('visible');};
+
+function renderRaw(user){let h='';const l=user.lines;const m=user.mounts;const f=user.fingers;const mk=user.specialMarkings;
+  if(l&&hasContent(l)){h+=`<div class="card"><h2>Lines</h2>`;[{k:'heart',l:'❤️ Heart'},{k:'head',l:'🧠 Head'},{k:'life',l:'🌿 Life'},{k:'fate',l:'🎯 Fate'},{k:'sun',l:'☀️ Sun'},{k:'mercury',l:'☿ Mercury'},{k:'marriage',l:'💍 Marriage'},{k:'girdle_of_venus',l:'🌙 Girdle'},{k:'rascettes',l:'⌚ Rascettes'}].forEach(x=>{const ln=l[x.k];if(!ln||!hasContent(ln))return;h+=`<div class="detail-card"><h3>${x.l}</h3>`;['quality','length','depth','branches','count','present'].forEach(f=>{if(ln[f])h+=`<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:12px"><span style="color:var(--text-muted)">${cap(f)}</span><span>${ln[f]}</span></div>`;});if(ln.description)h+=`<p style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border);font-size:12px">${ln.description}</p>`;h+=`</div>`;});h+=`</div>`;}
+  if(m&&hasContent(m)){h+=`<div class="card"><h2>Mounts</h2>`;[{k:'jupiter',l:'♃ Jupiter'},{k:'saturn',l:'♄ Saturn'},{k:'apollo',l:'☉ Apollo'},{k:'mercury_mount',l:'☿ Mercury'},{k:'venus',l:'♀ Venus'},{k:'moon',l:'☽ Moon'},{k:'mars_positive',l:'♂ Mars+'},{k:'mars_negative',l:'♂ Mars−'},{k:'plain_of_mars',l:'⬜ Plain'}].forEach(x=>{const mt=m[x.k];if(!mt||!hasContent(mt))return;h+=`<div class="detail-card"><h3>${x.l}</h3>`;if(mt.development)h+=`<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:12px"><span style="color:var(--text-muted)">Dev</span><span>${mt.development}</span></div>`;if(mt.description)h+=`<p style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border);font-size:12px">${mt.description}</p>`;h+=`</div>`;});h+=`</div>`;}
+  if(f&&hasContent(f)){h+=`<div class="card"><h2>Fingers</h2>`;[{k:'thumb',l:'👍 Thumb'},{k:'index',l:'☝️ Index'},{k:'middle',l:'🖐️ Middle'},{k:'ring',l:'💍 Ring'},{k:'little',l:'🤙 Little'}].forEach(x=>{const fg=f[x.k];if(!fg||!hasContent(fg))return;h+=`<div class="detail-card"><h3>${x.l}</h3>`;['length','tip_shape','flexibility','leaning','phalanges'].forEach(fd=>{if(fg[fd])h+=`<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:12px"><span style="color:var(--text-muted)">${cap(fd.replace(/_/g,' '))}</span><span>${fg[fd]}</span></div>`;});if(fg.description)h+=`<p style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border);font-size:12px">${fg.description}</p>`;h+=`</div>`;});h+=`</div>`;}
+  if(mk){let mb='';[{k:'crosses',l:'✝️ Crosses'},{k:'stars',l:'⭐ Stars'},{k:'islands',l:'🏝️ Islands'},{k:'squares',l:'🛡️ Squares'},{k:'triangles',l:'△ Triangles'},{k:'grilles',l:'▦ Grilles'},{k:'dots',l:'⚫ Dots'},{k:'tridents',l:'🔱 Tridents'}].forEach(x=>{const items=mk[x.k];if(!items?.length)return;mb+=`<div class="detail-card"><h3>${x.l}</h3>`;items.forEach(i=>{mb+=`<p style="margin:3px 0;font-size:12px">✦ ${i}</p>`;});mb+=`</div>`;});if(mb)h+=`<div class="card"><h2>Markings</h2>${mb}</div>`;}
+  return h;}
+
+// ASK
+function renderAsk(user){const name=user.name.split(' ')[0];let h='';
+  h+=`<div class="card"><h2><span class="accent">❓</span> Ask Your Palm</h2><p style="color:var(--text-secondary);font-size:13px;margin-bottom:18px;line-height:1.7">Ask anything. Get sharp, age-specific answers from your palm data.</p><div class="ask-input-area"><input type="text" class="ask-input" id="askInput" placeholder="What would you like to know, ${name}?" onkeydown="if(event.key==='Enter')submitQuestion()"><button class="ask-submit" onclick="submitQuestion()">✦</button></div><div class="suggested-q"><div class="suggested-q-btn" onclick="askSuggested('When will my career peak?')">💼 Career peak?</div><div class="suggested-q-btn" onclick="askSuggested('What kind of partner suits me?')">💕 Partner type?</div><div class="suggested-q-btn" onclick="askSuggested('When should I get married?')">💍 Marriage?</div><div class="suggested-q-btn" onclick="askSuggested('Will I be rich?')">💰 Wealth?</div><div class="suggested-q-btn" onclick="askSuggested('What should I avoid?')">⚠️ Avoid?</div><div class="suggested-q-btn" onclick="askSuggested('Business or job?')">🏢 Biz/Job?</div><div class="suggested-q-btn" onclick="askSuggested('What happens next?')">🔮 Future?</div><div class="suggested-q-btn" onclick="askSuggested('Will my relationship last?')">💗 Love future?</div></div></div><div id="askAnswersContainer">`;
+  askHistory.forEach(qa=>{h+=`<div class="answer-card"><div class="q-text">Q: ${qa.q}</div><div class="a-text">${qa.a}</div><div class="a-source">✦ Karmarekha by Raj</div></div>`;});
+  h+=`</div>`;document.getElementById('screenAsk').innerHTML=h;}
+window.submitQuestion=function(){const input=document.getElementById('askInput');const q=input.value.trim();if(!q||!currentUser)return;const a=generateAnswer(q,currentUser);askHistory.unshift({q,a});input.value='';const c=document.getElementById('askAnswersContainer');const card=document.createElement('div');card.className='answer-card';card.innerHTML=`<div class="q-text">Q: ${q}</div><div class="a-text">${a}</div><div class="a-source">✦ Karmarekha by Raj</div>`;c.insertBefore(card,c.firstChild);};
+window.askSuggested=function(q){document.getElementById('askInput').value=q;submitQuestion();};
+</script>
+</body>
+</html>
